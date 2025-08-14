@@ -4,7 +4,10 @@ namespace App\Http\Rules;
 
 class UserRule
 {
-    public static function name()
+    /**
+     * @return array<string>
+     */
+    public static function name(): array
     {
 
         return [
@@ -15,7 +18,11 @@ class UserRule
         ];
     }
 
-    public static function nullableName()
+    /**
+     *
+     * @return array<string>
+     */
+    public static function nullableName(): array
     {
 
         return [
@@ -25,8 +32,10 @@ class UserRule
             CommonRule::preventDigit(),
         ];
     }
-
-    public static function firstName()
+    /**
+     * @return array<string>
+     */
+    public static function firstName(): array
     {
 
         return [
@@ -36,8 +45,10 @@ class UserRule
             CommonRule::preventDigit(),
         ];
     }
-
-    public static function lastName()
+    /**
+     * @return array<string>
+     */
+    public static function lastName(): array
     {
 
         return [
@@ -47,8 +58,10 @@ class UserRule
             CommonRule::preventDigit(),
         ];
     }
-
-    public static function middleName()
+    /**
+     * @return array<string>
+     */
+    public static function middleName(): array
     {
         return [
             'nullable',
@@ -57,8 +70,10 @@ class UserRule
             CommonRule::preventDigit(),
         ];
     }
-
-    public static function suffix()
+    /**
+     * @return array<string>
+     */
+    public static function suffix(): array
     {
         return [
             'nullable',
@@ -67,48 +82,66 @@ class UserRule
             CommonRule::preventDigit(),
         ];
     }
-
-    public static function phoneNumber()
+    /**
+     * @return array<string>
+     */
+    public static function phoneNumber(): array
     {
         return ['required', CommonRule::phpPhonenumber()];
     }
-
-    public static function nullablePhoneNumber()
+    /**
+     * @return array<string>
+     */
+    public static function nullablePhoneNumber(): array
     {
         return ['nullable', CommonRule::phpPhonenumber()];
     }
-
-    public static function email()
+    /**
+     * @return array<string>
+     */
+    public static function email(): array
     {
         return ['required', 'string', 'lowercase', 'email', 'max:255'];
     }
-
-    public static function username()
+    /**
+     * @return array<string>
+     */
+    public static function username(): array
     {
         return ['required', 'numeric'];
     }
-
-    public static function role()
+    /**
+     * @return array<string>
+     */
+    public static function role(): array
     {
         return ['required', 'string'];
     }
-
+    /**
+     * @return array<string>
+     */
     public static function gender(): array
     {
         return ['required', 'string'];
     }
-
+    /**
+     * @return array<string>
+     */
     public static function nullableGender(): array
     {
         return ['nullable', 'string'];
     }
-
-    public static function birthdate()
+    /**
+     * @return array<string>
+     */
+    public static function birthdate(): array
     {
         return ['required', 'date', 'before:now'];
     }
-
-    public static function nullableBirthdate()
+    /**
+     * @return array<string>
+     */
+    public static function nullableBirthdate(): array
     {
         return ['nullable', 'date', 'before:now'];
     }

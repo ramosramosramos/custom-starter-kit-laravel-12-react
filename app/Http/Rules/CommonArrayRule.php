@@ -4,81 +4,143 @@ namespace App\Http\Rules;
 
 class CommonArrayRule
 {
-    public static function shortNullableString()
+    /**
+     * It is short nullable string validator
+     * @return string[]
+     */
+    public static function shortNullableString(): array
     {
         return ['nullable', 'string', 'max:255'];
     }
 
-    public static function shortRequiredString()
+    /**
+     * It is short required string validator
+     * @return string[]
+     */
+    public static function shortRequiredString(): array
     {
         return ['required', 'string', 'max:255'];
     }
-    public static function shortNullableNumeric()
+    /**
+     * It is short nullable numeric validator
+     * @return string[]
+     */
+    public static function shortNullableNumeric(): array
     {
         return ['nullable', 'numeric'];
     }
 
-    public static function shortRequiredNumeric()
+    /**
+     * It is short required numeric validator
+     * @return string[]
+     */
+    public static function shortRequiredNumeric(): array
     {
         return ['required', 'numeric'];
     }
 
-    public static function longNullableString()
+    /**
+     * It is long nullable string validator
+     * @return string[]
+     */
+    public static function longNullableString(): array
     {
         return ['nullable', 'string'];
     }
 
-    public static function longRequiredString()
+    /**
+     * It is long required string validator
+     * @return string[]
+     */
+    public static function longRequiredString(): array
     {
         return ['required', 'string'];
     }
 
-    public static function requiredBoolean()
+    /**
+     * It is required boolean validator
+     * @return string[]
+     */
+    public static function requiredBoolean(): array
     {
         return ['required', 'boolean'];
     }
 
-    public static function nullableBoolean()
+    /**
+     * It is nullable boolean validator
+     * @return string[]
+     */
+    public static function nullableBoolean(): array
     {
         return ['nullable', 'boolean'];
     }
 
-    public static function requiredDate()
+    /**
+     * It is required date validator
+     * @return string[]
+     */
+    public static function requiredDate(): array
     {
         return ['required', 'date'];
     }
 
-    public static function nullableDate()
+    /**
+     * It is nullable date validator
+     * @return string[]
+     */
+    public static function nullableDate(): array
     {
         return ['nullable', 'date'];
     }
 
-    public static function requiredURL()
+    /**
+     * It is required URL validator
+     * @return string[]
+     */
+    public static function requiredURL(): array
     {
         return ['required', 'url'];
     }
-
-    public static function nullableURL()
+    /**
+     * It is nullable URL validator
+     * @return string[]
+     */
+    public static function nullableURL(): array
     {
         return ['nullable', 'url'];
     }
 
-    public static function requiredCaptcha()
+    /**
+     * It is required captcha validator
+     * @return string[]
+     */
+    public static function requiredCaptcha(): array
     {
         return ['required', 'captcha'];
     }
 
-    public static function nullableCaptcha()
+    /**
+     * It is nullable captcha validator
+     * @return string[]
+     */
+    public static function nullableCaptcha(): array
     {
         return ['nullable', 'captcha'];
     }
-
-    public static function requiredImage()
+    /**
+     * It is required image validator
+     * @return string[]
+     */
+    public static function requiredImage(): array
     {
         return ['required', 'file', 'max:5024'];
 
     }
-    public static function nullableImage()
+    /**
+     * It is nullable image validator
+     * @return string[]
+     */
+    public static function nullableImage(): array
     {
         return ['nullable', 'max:5024'];
 

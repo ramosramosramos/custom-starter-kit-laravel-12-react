@@ -31,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         $this->tuneModelBehavior();
         $this->enforceSecureUrls();
         $this->optimizeViteSettings();
+        $this->logViewerRule();
     }
 
 
@@ -66,13 +67,13 @@ class AppServiceProvider extends ServiceProvider
         Vite::usePrefetchStrategy('aggressive');
     }
 
-    private function logViewerRule()
+    private function logViewerRule(): void
     {
-        LogViewer::auth(function ($request) {
+        LogViewer::auth(function ($request): bool {
             return true;
         });
 
-        Gate::define('viewLogViewer', function (?User $user) {
+        Gate::define('viewLogViewer', function (?User $user): bool {
             return true;
         });
     }

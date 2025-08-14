@@ -28,6 +28,9 @@ For the best development experience, I recommend using **[Laravel Herd](https://
 * **Laravel Debugbar**: [GitHub](https://github.com/barryvdh/laravel-debugbar)
 * **Log Viewer**: [Website](https://log-viewer.opcodes.io/)
 
+Php statn see:https://phpstan.org/user-guide/getting-started
+larastan see:https://github.com/larastan/larastan
+
   > **Tip**: Adjust permissions in the `logViewerRule` method inside `AppServiceProvider`.
 
 ---

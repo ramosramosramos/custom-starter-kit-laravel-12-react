@@ -4,18 +4,29 @@ namespace App\Http\Rules;
 
 class CommonRule
 {
+    /**
+     * format for phone number in the philippines
+     * @return string
+     */
     public static function phpPhonenumber(): string
     {
         return 'regex:/^09\d{9}$/';
     }
 
-    public static function preventDigit()
+    /**
+     * It prevents digit in the string
+     * @return string
+     */
+    public static function preventDigit(): string
     {
         return 'regex:/^[A-Za-z.\s]+$/';
     }
-
-    public static function yearMax()
+    /**
+     * It is year validator for max year
+     * @return string
+     */
+    public static function yearMax(): string
     {
-        return 'max:'.(date('Y') + 1);
+        return 'max:' . (date('Y') + 1);
     }
 }
