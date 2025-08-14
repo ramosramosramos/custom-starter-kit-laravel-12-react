@@ -4,7 +4,7 @@
 # Laravel 12 + React 19 Starter Kit
 
 A **starter kit** built with **Laravel 12** and **React 19**.
-I recommend using **[Laravel Herd](https://herd.laravel.com/windows)** to run this project for the best development experience.
+For the best development experience, I recommend using **[Laravel Herd](https://herd.laravel.com/windows)**.
 
 ---
 
@@ -14,8 +14,8 @@ I recommend using **[Laravel Herd](https://herd.laravel.com/windows)** to run th
 * **PHP**: 8.2 – 8.4
 * **Laravel Wayfinder**: [GitHub Repo](https://github.com/laravel/wayfinder)
 * **Tailwind CSS**: Latest (Tailwind 4 ready)
-* **shadcn/ui**: [Docs](https://ui.shadcn.com/)
-* **Inertia.js**: [Docs](https://inertiajs.com/)
+* **shadcn/ui**: [Documentation](https://ui.shadcn.com/)
+* **Inertia.js**: [Documentation](https://inertiajs.com/)
 * **Node.js**: 23.9.0
 * **Composer**: 2.7.9 — [Download](https://getcomposer.org/)
 * **AppServiceProvider Configurations**: [Reference](https://medium.com/@umeshp113/must-have-configurations-in-your-laravel-appserviceprovider-php-d9808668ed83)
@@ -28,7 +28,7 @@ I recommend using **[Laravel Herd](https://herd.laravel.com/windows)** to run th
 * **Laravel Debugbar**: [GitHub](https://github.com/barryvdh/laravel-debugbar)
 * **Log Viewer**: [Website](https://log-viewer.opcodes.io/)
 
-  * *Tip*: Adjust permissions in the `logViewerRule` method inside `AppServiceProvider`.
+  > **Tip**: Adjust permissions in the `logViewerRule` method inside `AppServiceProvider`.
 
 ---
 
@@ -38,7 +38,7 @@ I recommend using **[Laravel Herd](https://herd.laravel.com/windows)** to run th
 # Clone the repository
 git clone https://github.com/ramosramosramos/custom-starter-kit-laravel-12-react.git
 
-# Go into the project folder
+# Enter the project folder
 cd custom-starter-kit-laravel-12-react
 
 # Install PHP dependencies
@@ -46,6 +46,20 @@ composer install
 
 # Install Node.js dependencies
 npm install
+
+# Copy environment file
+cp .env.example .env   # On Windows use: copy .env.example .env
+
+# Generate application key
+php artisan key:generate
+
+# (Optional) Configure your .env file for database, mail, etc.
+
+# Run database migrations
+php artisan migrate
+
+# (Optional) Seed the database
+php artisan db:seed
 
 # Build frontend assets (development)
 npm run dev
@@ -63,9 +77,9 @@ php artisan serve
 
 ---
 
-## 🔄 When Updating Backend Code
+## 🔄 Updating Backend Code
 
-After making changes to backend code, run:
+After making changes to backend code:
 
 ```bash
 php artisan optimize:clear
@@ -73,6 +87,38 @@ php artisan optimize
 php artisan wayfinder
 ```
 
-> 💡 You can also stop the Node.js development server (`npm run dev`) to prevent asset watching if you only need backend changes.
+💡 If you are only working on backend changes, you can stop the Node.js dev server (`npm run dev`) to avoid unnecessary asset watching.
+
+---
+
+## 🧩 Custom Validation Rules
+
+This starter kit includes custom validation rules located in:
+
+```
+app/Http/Rules
+```
+
+You can use them like this:
+
+```php
+use App\Http\Rules\CommonArrayRule;
+use App\Http\Rules\UserRule;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
+
+public function rules(): array
+{
+    return [
+        'first_name'      => UserRule::firstName(),
+        'last_name'       => UserRule::lastName(),
+        'middle_name'     => UserRule::middleName(),
+        'phone_number'    => UserRule::nullablePhoneNumber(),
+        'email'           => [...UserRule::email(), 'exists:users,email'],
+        'username'        => UserRule::username(),
+        'turnstile_token' => CommonArrayRule::longRequiredString(),
+    ];
+}
+```
 
 ---
