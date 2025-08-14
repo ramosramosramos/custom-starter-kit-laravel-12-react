@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Data\UserData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Settings\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -29,8 +30,10 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
+        /** @var \App\Data\UserData $user */
+        $user = UserData::from($request->user());
+
         /** @var \App\Models\User $user */
-        $user = $request->user();
         $user->fill($request->validated());
 
         if ($user->isDirty('email')) {
@@ -51,11 +54,11 @@ class ProfileController extends Controller
             'password' => ['required', 'current_password'],
         ]);
 
-        /** @var \App\Models\User $user */
-        $user = $request->user();
+        /** @var UserData $user */
+        $user = UserData::from($request->user());
 
         Auth::logout();
-
+        /** @var \App\Models\User $user */
         $user->delete();
 
         $request->session()->invalidate();

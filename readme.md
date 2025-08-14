@@ -20,20 +20,27 @@ For the best development experience, I recommend using **[Laravel Herd](https://
 * **Composer**: 2.7.9 — [Download](https://getcomposer.org/)
 * **AppServiceProvider Configurations**: [Reference](https://medium.com/@umeshp113/must-have-configurations-in-your-laravel-appserviceprovider-php-d9808668ed83)
 
+
+
 ---
 
 ## 🛠 Debugging Tools
 
-* **React Scan**: [GitHub](https://github.com/aidenybai/react-scan)
-* **Laravel Debugbar**: [GitHub](https://github.com/barryvdh/laravel-debugbar)
-* **Log Viewer**: [Website](https://log-viewer.opcodes.io/)
+* **React Scan** — [GitHub](https://github.com/aidenybai/react-scan)
+* **Laravel Debugbar** — [GitHub](https://github.com/barryvdh/laravel-debugbar)
+* **Log Viewer** — [Website](https://log-viewer.opcodes.io/)
 
-Php statn see:https://phpstan.org/user-guide/getting-started
-larastan see:https://github.com/larastan/larastan
+Additional tools and references:
 
-  > **Tip**: Adjust permissions in the `logViewerRule` method inside `AppServiceProvider`.
+* **PHPStan** — [Getting Started](https://phpstan.org/user-guide/getting-started)
+* **Larastan** — [GitHub](https://github.com/larastan/larastan)
+* **Spatie Laravel Data (DTO)** — [Installation & Setup](https://spatie.be/docs/laravel-data/v4/installation-setup)
+
+> **Tip:** You can adjust permissions in the `logViewerRule` method inside `AppServiceProvider`.
 
 ---
+
+
 
 ## 📦 Installation & Setup
 
