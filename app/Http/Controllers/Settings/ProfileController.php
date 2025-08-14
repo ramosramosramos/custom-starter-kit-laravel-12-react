@@ -30,11 +30,15 @@ class ProfileController extends Controller
      */
     public function update(ProfileUpdateRequest $request): RedirectResponse
     {
-        /** @var \App\Data\UserData $user */
-        $user = UserData::from($request->user());
+        $user = $request->user();
+        /** @var \App\Data\UserData $userDTO */
+        $userDTO = UserData::from($request );
 
         /** @var \App\Models\User $user */
-        $user->fill($request->validated());
+        $user->fill([
+            'name'=>$userDTO->name,
+            'email'=>$userDTO->email,
+        ]);
 
         if ($user->isDirty('email')) {
             $user->email_verified_at = null;
@@ -54,11 +58,9 @@ class ProfileController extends Controller
             'password' => ['required', 'current_password'],
         ]);
 
-        /** @var UserData $user */
-        $user = UserData::from($request->user());
-
-        Auth::logout();
         /** @var \App\Models\User $user */
+        $user= $request->user();
+        Auth::logout();
         $user->delete();
 
         $request->session()->invalidate();
