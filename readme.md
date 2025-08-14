@@ -1,7 +1,7 @@
 
 ---
 
-# Laravel 12 + React 19 Starter Kit
+# Laravel 12 + React +InertiaJS Starter Kit
 
 A **starter kit** built with **Laravel 12** and **React 19**.
 For the best development experience, I recommend using **[Laravel Herd](https://herd.laravel.com/windows)**.
