@@ -36,6 +36,7 @@ Additional tools and references:
 * **PHPStan** — [Getting Started](https://phpstan.org/user-guide/getting-started)
 * **Larastan** — [GitHub](https://github.com/larastan/larastan)
 * **Spatie Laravel Data (DTO)** — [Installation & Setup](https://spatie.be/docs/laravel-data/v4/installation-setup)
+* **Laravel Actions** — [Introduction](https://www.laravelactions.com/)
 
 > **Tip:** You can adjust permissions in the `logViewerRule` method inside `AppServiceProvider`.
 

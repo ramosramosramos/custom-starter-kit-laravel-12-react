@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Settings;
 
+use App\Actions\User\UpdateUserPasswordAction;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -37,10 +38,7 @@ class PasswordController extends Controller
         ]);
         /** @var \App\Models\User $user */
         $user = $request->user();
-        $user->update([
-            'password' => Hash::make((string) $validated['password']),
-        ]);
-
+        UpdateUserPasswordAction::run($user, $validated['password']);
         return back();
     }
 }
