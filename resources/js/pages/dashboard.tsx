@@ -64,7 +64,16 @@ export default function Dashboard() {
                         }}>
                             Message received toast
                         </Button>
+
                     </div>
+                    <div className="flex justify-center flex-col items-center border p-2 gap-5">
+                        This is for Laravel logs.
+                        Make sure to configure the authorization in AppServiceProvider— it's the logViewerRule method.
+                        <a href="/log-viewer" className="text-white bg-blue-500 p-2 rounded-md">
+                            View Laravel Logs
+                        </a>
+                    </div>
+
                 </div>
             </div>
         </AppLayout>
