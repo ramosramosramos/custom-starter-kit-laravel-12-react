@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Traits\AuthUserTrait;
 use Illuminate\Foundation\Inspiring;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
@@ -9,6 +10,7 @@ use Tighten\Ziggy\Ziggy;
 
 class HandleInertiaRequests extends Middleware
 {
+    use AuthUserTrait;
     /**
      * The root template that's loaded on the first page visit.
      *
@@ -47,9 +49,15 @@ class HandleInertiaRequests extends Middleware
         return [
             ...parent::share($request),
             'name' => config('app.name'),
+
             'quote' => ['message' => trim($quoteParts[0] ?? ''), 'author' => trim($quoteParts[1] ?? '')],
             'auth' => [
-                'user' => $user?->only('id', 'name', 'email', 'email_verified_at') ?? null,
+                'user' => $user
+                    ? [
+                        ...$user->only('id', 'name', 'email', 'email_verified_at'),
+                        'can' => $this->getCan($user),
+                    ]
+                    : null,
             ],
             'ziggy' => fn(): array => [
                 ...(new Ziggy)->toArray(),

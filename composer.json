@@ -17,6 +17,7 @@
         "lorisleiva/laravel-actions": "^2.9",
         "opcodesio/log-viewer": "^3.19",
         "spatie/laravel-data": "^4.17",
+        "spatie/laravel-permission": "^6.21",
         "tightenco/ziggy": "^2.4"
     },
     "require-dev": {
