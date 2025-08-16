@@ -15,6 +15,7 @@ For the best development experience, I recommend using **[Laravel Herd](https://
 * **Laravel Wayfinder**: [GitHub Repo](https://github.com/laravel/wayfinder)
 * **Tailwind CSS**: Latest (Tailwind 4 ready)
 * **shadcn/ui**: [Documentation](https://ui.shadcn.com/)
+* **tweakcn for shadcn/ui theme**: [Documentation](https://tweakcn.com/editor/theme)
 * **react-hot-toast**: [Documentation](https://www.npmjs.com/package/react-hot-toast)
 * **Inertia.js**: [Documentation](https://inertiajs.com/)
 * **Node.js**: 23.9.0
