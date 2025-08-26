@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Enum\PermissionEnum;
+use App\Http\Rules\UserRule;
 use App\Models\User;
 use App\Services\UserService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 use Spatie\Permission\Models\Role;
@@ -20,6 +24,7 @@ class UserController extends Controller
      */
     public function index(): Response|ResponseFactory
     {
+        $this->authorize(PermissionEnum::USER_VIEW->value);
 
         return inertia('user/index', [
             'users' => app(UserService::class)->getUsers(),
@@ -33,52 +38,104 @@ class UserController extends Controller
      */
     public function create(): Response|ResponseFactory
     {
+        $this->authorize(PermissionEnum::USER_CREATE->value);
+
         //
         return inertia('user/create', [
-            'roles' => Role::select(),
+            'roles' => Role::select('id', 'name')->get(),
         ]);
     }
 
-
-    public function store(Request $request): void
+    /**
+     * Summary of store
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function store(Request $request): RedirectResponse
     {
+        $this->authorize(PermissionEnum::USER_CREATE->value);
+        /**
+         * @var array<string[]> $validated
+         */
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|max:255',
-            'roles' => 'required|array',
+            'name' => UserRule::name(),
+            'email' => UserRule::uniqueEmail(),
+            'role' => ['required', 'string'],
+        ]);
+
+        /**
+         * @var User $user
+         */
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'password' => bcrypt(Str::random(50)),
+        ]);
+
+        $user->syncRoles($validated['role']);
+
+        return redirect()->route('users.index');
+    }
+
+    /**
+     * Summary of edit
+     *
+     * @param  \App\Models\User  $user
+     * @return \Inertia\Response|\Inertia\ResponseFactory
+     */
+    public function edit(User $user): Response|ResponseFactory
+    {
+        $this->authorize(PermissionEnum::USER_UPDATE->value);
+
+        //
+        return inertia('user/edit', [
+            'user' => $user->load('roles'),
+            'roles' => Role::select('id', 'name')->get(),
         ]);
     }
 
     /**
-     * Display the specified resource.
+     * Summary of update
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function show(User $user): void
+    public function update(Request $request, User $user): RedirectResponse
     {
-        //
+        $this->authorize(PermissionEnum::USER_UPDATE->value);
+        /**
+         * @var array<string,string[]> $validated
+         */
+        $validated = $request->validate([
+            'name' => UserRule::name(),
+            'email' => UserRule::email(),
+            'role' => ['required', 'string'],
+        ]);
+        $user->update([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+        ]);
+        $user->password = bcrypt(Str::random(50));
+        $user->save();
+
+        $user->syncRoles($validated['role']);
+
+        return redirect()->route('users.index');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Summary of destroy
+     *
+     * @param  \App\Models\User  $user
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function edit(User $user): void
+    public function destroy(User $user): RedirectResponse
     {
-        //
-    }
+        $this->authorize(PermissionEnum::USER_DELETE->value);
+        $user->delete();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user): void
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(User $user): void
-    {
-        //
+        return redirect()->route('users.index');
     }
 }
