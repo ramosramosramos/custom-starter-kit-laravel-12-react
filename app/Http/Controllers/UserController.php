@@ -14,17 +14,22 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Summary of index
+     *
+     * @return \Inertia\Response|\Inertia\ResponseFactory
      */
     public function index(): Response|ResponseFactory
     {
+
         return inertia('user/index', [
             'users' => app(UserService::class)->getUsers(),
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Summary of create
+     *
+     * @return \Inertia\Response|\Inertia\ResponseFactory
      */
     public function create(): Response|ResponseFactory
     {

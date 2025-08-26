@@ -1,13 +1,12 @@
-
-import messageSound from '../../assets/audios/message_audio.mp3';
-import warningSound from '../../assets/audios/warning_audio.mp3';
-import successSound from '../../assets/audios/success_audio.mp3';
-import infoSound from '../../assets/audios/info_audio.mp3';
 import errorSound from '../../assets/audios/error_audio.mp3';
+import infoSound from '../../assets/audios/info_audio.mp3';
+import messageSound from '../../assets/audios/message_audio.mp3';
+import successSound from '../../assets/audios/success_audio.mp3';
+import warningSound from '../../assets/audios/warning_audio.mp3';
 
 type playAudio = {
     type: 'message' | 'warning' | 'success' | 'info' | 'error';
-}
+};
 
 export const playAudio = (type: playAudio['type']) => {
     let audio = new Audio(messageSound);
@@ -30,10 +29,9 @@ export const playAudio = (type: playAudio['type']) => {
     }
 
     audio.play();
-}
+};
 
 //usage
 // <button onClick={() => playAudio('message')}>
 //     <span>Play Audio</span>
 // </button>
-
