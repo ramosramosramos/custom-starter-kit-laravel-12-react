@@ -41,3 +41,19 @@ export interface User {
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
 }
+
+export type Prettify<T> = {
+    [K in keyof T]: T[K];
+} & {};
+export type OmitKeys<T, K extends keyof T> = Omit<T, K>;
+export type FormAblity = 'create' | 'edit';
+
+export type FormDataType<T extends { [key: string]: string | number | boolean | undefined }> = T;
+
+export type Filter = FormDataType<{
+    search?: string;
+    created_at?: string;
+    start_date?: string;
+    end_date?: string;
+    type?: string;
+}>;
