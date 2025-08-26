@@ -1,7 +1,5 @@
 <?php
 
-declare(strict_types=1);
-
 namespace App\Http\Rules;
 
 class UserRule
@@ -21,6 +19,7 @@ class UserRule
     }
 
     /**
+     *
      * @return array<string>
      */
     public static function nullableName(): array
@@ -33,7 +32,6 @@ class UserRule
             CommonRule::preventDigit(),
         ];
     }
-
     /**
      * @return array<string>
      */
@@ -47,7 +45,6 @@ class UserRule
             CommonRule::preventDigit(),
         ];
     }
-
     /**
      * @return array<string>
      */
@@ -61,7 +58,6 @@ class UserRule
             CommonRule::preventDigit(),
         ];
     }
-
     /**
      * @return array<string>
      */
@@ -74,7 +70,6 @@ class UserRule
             CommonRule::preventDigit(),
         ];
     }
-
     /**
      * @return array<string>
      */
@@ -87,7 +82,6 @@ class UserRule
             CommonRule::preventDigit(),
         ];
     }
-
     /**
      * @return array<string>
      */
@@ -95,7 +89,6 @@ class UserRule
     {
         return ['required', CommonRule::phpPhonenumber()];
     }
-
     /**
      * @return array<string>
      */
@@ -103,7 +96,6 @@ class UserRule
     {
         return ['nullable', CommonRule::phpPhonenumber()];
     }
-
     /**
      * @return array<string>
      */
@@ -111,7 +103,6 @@ class UserRule
     {
         return ['required', 'string', 'lowercase', 'email', 'max:255'];
     }
-
     /**
      * @return array<string>
      */
@@ -119,7 +110,6 @@ class UserRule
     {
         return ['required', 'numeric'];
     }
-
     /**
      * @return array<string>
      */
@@ -127,7 +117,6 @@ class UserRule
     {
         return ['required', 'string'];
     }
-
     /**
      * @return array<string>
      */
@@ -135,7 +124,6 @@ class UserRule
     {
         return ['required', 'string'];
     }
-
     /**
      * @return array<string>
      */
@@ -143,7 +131,6 @@ class UserRule
     {
         return ['nullable', 'string'];
     }
-
     /**
      * @return array<string>
      */
@@ -151,7 +138,6 @@ class UserRule
     {
         return ['required', 'date', 'before:now'];
     }
-
     /**
      * @return array<string>
      */
