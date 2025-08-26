@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use App\Traits\AuthUserTrait;
@@ -11,6 +13,7 @@ use Tighten\Ziggy\Ziggy;
 class HandleInertiaRequests extends Middleware
 {
     use AuthUserTrait;
+
     /**
      * The root template that's loaded on the first page visit.
      *
@@ -46,6 +49,7 @@ class HandleInertiaRequests extends Middleware
 
         /** @var \App\Models\User|null $user */
         $user = $request->user();
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
@@ -59,11 +63,11 @@ class HandleInertiaRequests extends Middleware
                     ]
                     : null,
             ],
-            'ziggy' => fn(): array => [
-                ...(new Ziggy)->toArray(),
+            'ziggy' => fn (): array => [
+                ...(new Ziggy())->toArray(),
                 'location' => $request->url(),
             ],
-            'sidebarOpen' => !$request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];
     }
 }

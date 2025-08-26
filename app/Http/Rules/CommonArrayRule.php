@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Rules;
 
 class CommonArrayRule
 {
     /**
      * It is short nullable string validator
+     *
      * @return string[]
      */
     public static function shortNullableString(): array
@@ -15,14 +18,17 @@ class CommonArrayRule
 
     /**
      * It is short required string validator
+     *
      * @return string[]
      */
     public static function shortRequiredString(): array
     {
         return ['required', 'string', 'max:255'];
     }
+
     /**
      * It is short nullable numeric validator
+     *
      * @return string[]
      */
     public static function shortNullableNumeric(): array
@@ -32,6 +38,7 @@ class CommonArrayRule
 
     /**
      * It is short required numeric validator
+     *
      * @return string[]
      */
     public static function shortRequiredNumeric(): array
@@ -41,6 +48,7 @@ class CommonArrayRule
 
     /**
      * It is long nullable string validator
+     *
      * @return string[]
      */
     public static function longNullableString(): array
@@ -50,6 +58,7 @@ class CommonArrayRule
 
     /**
      * It is long required string validator
+     *
      * @return string[]
      */
     public static function longRequiredString(): array
@@ -59,6 +68,7 @@ class CommonArrayRule
 
     /**
      * It is required boolean validator
+     *
      * @return string[]
      */
     public static function requiredBoolean(): array
@@ -68,6 +78,7 @@ class CommonArrayRule
 
     /**
      * It is nullable boolean validator
+     *
      * @return string[]
      */
     public static function nullableBoolean(): array
@@ -77,6 +88,7 @@ class CommonArrayRule
 
     /**
      * It is required date validator
+     *
      * @return string[]
      */
     public static function requiredDate(): array
@@ -86,6 +98,7 @@ class CommonArrayRule
 
     /**
      * It is nullable date validator
+     *
      * @return string[]
      */
     public static function nullableDate(): array
@@ -95,14 +108,17 @@ class CommonArrayRule
 
     /**
      * It is required URL validator
+     *
      * @return string[]
      */
     public static function requiredURL(): array
     {
         return ['required', 'url'];
     }
+
     /**
      * It is nullable URL validator
+     *
      * @return string[]
      */
     public static function nullableURL(): array
@@ -112,6 +128,7 @@ class CommonArrayRule
 
     /**
      * It is required captcha validator
+     *
      * @return string[]
      */
     public static function requiredCaptcha(): array
@@ -121,14 +138,17 @@ class CommonArrayRule
 
     /**
      * It is nullable captcha validator
+     *
      * @return string[]
      */
     public static function nullableCaptcha(): array
     {
         return ['nullable', 'captcha'];
     }
+
     /**
      * It is required image validator
+     *
      * @return string[]
      */
     public static function requiredImage(): array
@@ -136,8 +156,10 @@ class CommonArrayRule
         return ['required', 'file', 'max:5024'];
 
     }
+
     /**
      * It is nullable image validator
+     *
      * @return string[]
      */
     public static function nullableImage(): array

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Settings;
 
 use App\Data\UserData;
@@ -32,12 +34,12 @@ class ProfileController extends Controller
     {
         $user = $request->user();
         /** @var \App\Data\UserData $userDTO */
-        $userDTO = UserData::from($request );
+        $userDTO = UserData::from($request);
 
         /** @var \App\Models\User $user */
         $user->fill([
-            'name'=>$userDTO->name,
-            'email'=>$userDTO->email,
+            'name' => $userDTO->name,
+            'email' => $userDTO->email,
         ]);
 
         if ($user->isDirty('email')) {
@@ -59,7 +61,7 @@ class ProfileController extends Controller
         ]);
 
         /** @var \App\Models\User $user */
-        $user= $request->user();
+        $user = $request->user();
         Auth::logout();
         $user->delete();
 

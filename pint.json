@@ -1,0 +1,16 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "no_superfluous_phpdoc_tags": false,
+        "phpdoc_add_missing_param_annotation": true,
+        "phpdoc_param_order": true,
+        "phpdoc_trim": true,
+        "declare_strict_types": true,
+        "simplified_null_return": true,
+        "array_indentation": false,
+        "new_with_parentheses": {
+            "anonymous_class": true,
+            "named_class": true
+        }
+    }
+}

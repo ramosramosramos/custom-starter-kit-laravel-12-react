@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Traits;
 
 use App\Models\User;
@@ -17,7 +19,7 @@ trait AuthUserTrait
     public function getCan(User $user): Collection
     {
         return cache()->remember(
-            'can' . $user->id,
+            'can'.$user->id,
             now()->addHours(24),
             function () use ($user) {
                 /** @var Collection<int, Permission> $permissions */
@@ -35,7 +37,7 @@ trait AuthUserTrait
      */
     public function forgetCan(User $user): void
     {
-        cache()->forget('can' . $user->id);
+        cache()->forget('can'.$user->id);
     }
 
     /**

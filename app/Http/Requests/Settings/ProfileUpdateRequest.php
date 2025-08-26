@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Settings;
 
 use App\Models\User;
@@ -18,6 +20,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         /** @var \App\Models\User $user */
         $user = $this->user();
+
         return [
             'name' => ['required', 'string', 'max:255'],
 

@@ -1,17 +1,18 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Events\NotificationFailed;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
+use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
-use Illuminate\Support\Facades\Gate;
-use App\Models\User;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -34,7 +35,6 @@ class AppServiceProvider extends ServiceProvider
         $this->logViewerRule();
     }
 
-
     /**
      * Prevent destructive commands in production.
      */
@@ -42,6 +42,7 @@ class AppServiceProvider extends ServiceProvider
     {
         DB::prohibitDestructiveCommands($this->app->isProduction());
     }
+
     /**
      * Fine-tune Eloquent model behavior.
      */
@@ -50,15 +51,17 @@ class AppServiceProvider extends ServiceProvider
         Model::shouldBeStrict();
         Model::unguard();
     }
+
     /**
      * Force HTTPS in non-local environments.
      */
     private function enforceSecureUrls(): void
     {
-        if (!$this->app->environment('local')) {
+        if (! $this->app->environment('local')) {
             URL::forceScheme('https');
         }
     }
+
     /**
      * Optimize Vite asset loading strategy.
      */
