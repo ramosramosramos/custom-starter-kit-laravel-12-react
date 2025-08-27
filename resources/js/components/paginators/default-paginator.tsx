@@ -5,10 +5,10 @@ import { Meta } from '@/types/paginator-type';
 import { router } from '@inertiajs/react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-export default function DefaultPaginator({ meta, filters }: { meta: Meta; filters?: Filter }) {
+export default function DefaultPaginator({ meta, filter }: { meta: Meta; filter?: Filter }) {
     const handlePagination = (url: string | null) => {
         if (url) {
-            router.get(url, { ...filters }, { preserveScroll: true });
+            router.get(url, { ...filter }, { preserveScroll: true });
         }
     };
 

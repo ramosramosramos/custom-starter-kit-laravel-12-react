@@ -18,8 +18,7 @@ use Spatie\Permission\Traits\HasRoles;
  * @property-read \Illuminate\Support\Carbon|null $updated_at
  * @property-write string $password
  * @property-write string $remember_token
- *
- * @method static User find(int $id)
+ * @property-read \Illuminate\Database\Eloquent\Collection<int,\Spatie\Permission\Models\Role> $roles
  */
 class User extends Authenticatable
 {

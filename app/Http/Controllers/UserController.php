@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enum\PermissionEnum;
+use App\Http\Resources\User\UserResource;
 use App\Http\Rules\UserRule;
 use App\Models\User;
 use App\Services\UserService;
@@ -27,7 +28,7 @@ class UserController extends Controller
         $this->authorize(PermissionEnum::USER_VIEW->value);
 
         return inertia('user/index', [
-            'users' => app(UserService::class)->getUsers(),
+            'users' => UserResource::collection(app(UserService::class)->getUsers()),
         ]);
     }
 

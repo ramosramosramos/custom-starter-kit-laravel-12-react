@@ -73,6 +73,11 @@
             "@php artisan config:clear --ansi",
             "@php artisan test"
         ],
+        "optimize": [
+            "@php artisan optimize:clear",
+            "@php artisan optimize",
+            "@php artisan wayfinder:generate"
+        ],
         "format": [
             "vendor/bin/phpstan analyse",
             "vendor/bin/pint"

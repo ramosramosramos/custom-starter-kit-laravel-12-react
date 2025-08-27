@@ -1,23 +1,83 @@
+import UserController from '@/actions/App/Http/Controllers/UserController';
+import DeleteButton from '@/components/buttons/delete-button';
+import EditButton from '@/components/buttons/edit-button';
+import TableCompound from '@/components/compounds/table-compound';
+import DefaultPaginator from '@/components/paginators/default-paginator';
 import AppLayout from '@/layouts/app-layout';
+import { playAudio } from '@/lib/audios/play-audio-message';
+import { notifyToast } from '@/lib/hot-notification/notify-toast';
 import { type BreadcrumbItem } from '@/types';
-
-import { Head } from '@inertiajs/react';
+import { UserProps } from '@/types/user/user-type';
+import { Head, router } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Users',
-        href: '/dashboard',
+        href: '/users',
     },
 ];
 
-export default function Index() {
+export default function Index({ users, filter }: UserProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3"></div>
-                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border"></div>
+                <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min md:p-5 dark:border-sidebar-border">
+                    {users.data.length > 0 && (
+                        <>
+                            <UserTable users={users} />
+                            <DefaultPaginator meta={users.meta} filter={filter} />
+                        </>
+                    )}
+                </div>
             </div>
         </AppLayout>
+    );
+}
+
+function UserTable({ users }: { users: UserProps['users'] }) {
+    return (
+        <TableCompound>
+            <TableCompound.Caption>A list of the users.</TableCompound.Caption>
+            <TableCompound.Header>
+                <TableCompound.Row>
+                    <TableCompound.Head>ID</TableCompound.Head>
+                    <TableCompound.Head>Name</TableCompound.Head>
+                    <TableCompound.Head>Email</TableCompound.Head>
+                    <TableCompound.Head>Role</TableCompound.Head>
+                    <TableCompound.Head>Actions</TableCompound.Head>
+                </TableCompound.Row>
+            </TableCompound.Header>
+            <TableCompound.Body>
+                {users.data.map((user) => (
+                    <TableCompound.Row key={user.id}>
+                        <TableCompound.Cell>{user.id}</TableCompound.Cell>
+                        <TableCompound.Cell>{user.name}</TableCompound.Cell>
+                        <TableCompound.Cell>{user.email}</TableCompound.Cell>
+                        <TableCompound.Cell>{user.role}</TableCompound.Cell>
+                        <TableCompound.Cell className="flex items-center gap-2">
+                            <EditButton onClick={() => UserController.edit(user.id)}>Edit</EditButton>
+                            <DeleteButton
+                                onClick={() =>
+                                    router.delete(UserController.destroy(user.id), {
+                                        preserveScroll: true,
+                                        onSuccess: () => {
+                                            notifyToast.success('Successfully deleted');
+                                            playAudio('success');
+                                        },
+                                        onError: () => {
+                                            notifyToast.error('Failed to delete');
+                                        },
+                                    })
+                                }
+                            >
+                                Delete
+                            </DeleteButton>
+                        </TableCompound.Cell>
+                    </TableCompound.Row>
+                ))}
+            </TableCompound.Body>
+        </TableCompound>
     );
 }
