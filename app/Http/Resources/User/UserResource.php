@@ -17,6 +17,7 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $this->withoutWrapping();
         /**
          * @var User $user
          */

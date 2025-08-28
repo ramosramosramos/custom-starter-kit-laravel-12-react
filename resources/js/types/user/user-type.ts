@@ -6,8 +6,6 @@ export type User = {
     name: string;
     email: string;
     role: string;
-    password: string;
-    email_verified_at: string;
     created_at: string;
     updated_at: string;
 };

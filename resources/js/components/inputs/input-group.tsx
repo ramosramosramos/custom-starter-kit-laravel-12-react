@@ -13,13 +13,13 @@ type InputGroupProps = ComponentProps<'div'> & {
     labelProps?: ComponentProps<typeof Label>;
 };
 
-export default function InputGroup({ id, label, required, error, inputProps, labelProps }: InputGroupProps) {
+export default function InputGroup({ id, label, required, error, inputProps, labelProps, ...props }: InputGroupProps) {
     return (
-        <div>
+        <div {...props}>
             <Label htmlFor={id} {...labelProps}>
                 {label} {required && <RequiredIndicator />}
             </Label>
-            <Input id={id} {...inputProps} />
+            <Input id={id} name={id} {...inputProps} />
             <InputError message={error} />
         </div>
     );

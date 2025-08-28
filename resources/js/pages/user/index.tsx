@@ -1,4 +1,5 @@
 import UserController from '@/actions/App/Http/Controllers/UserController';
+import AddButton from '@/components/buttons/add-button';
 import DeleteButton from '@/components/buttons/delete-button';
 import EditButton from '@/components/buttons/edit-button';
 import TableCompound from '@/components/compounds/table-compound';
@@ -22,7 +23,9 @@ export default function Index({ users, filter }: UserProps) {
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Users" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-3"></div>
+                <div className="flex justify-end p-1">
+                    <AddButton onClick={() => router.visit(UserController.create())}>Create</AddButton>
+                </div>
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min md:p-5 dark:border-sidebar-border">
                     {users.data.length > 0 && (
                         <>
@@ -56,8 +59,8 @@ function UserTable({ users }: { users: UserProps['users'] }) {
                         <TableCompound.Cell>{user.name}</TableCompound.Cell>
                         <TableCompound.Cell>{user.email}</TableCompound.Cell>
                         <TableCompound.Cell>{user.role}</TableCompound.Cell>
-                        <TableCompound.Cell className="flex items-center gap-2">
-                            <EditButton onClick={() => UserController.edit(user.id)}>Edit</EditButton>
+                        <TableCompound.Cell className="flex w-[max-content] items-center gap-2">
+                            <EditButton onClick={() => router.visit(UserController.edit(user.id))}>Edit</EditButton>
                             <DeleteButton
                                 onClick={() =>
                                     router.delete(UserController.destroy(user.id), {

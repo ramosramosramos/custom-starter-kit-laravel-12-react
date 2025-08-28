@@ -13,11 +13,7 @@ class UserTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->seed(DatabaseSeeder::class);
-    }
+    
     /**
      * A basic feature test example.
      */

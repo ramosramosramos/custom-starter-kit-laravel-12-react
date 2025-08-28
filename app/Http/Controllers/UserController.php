@@ -91,7 +91,7 @@ class UserController extends Controller
 
         //
         return inertia('user/edit', [
-            'user' => $user->load('roles'),
+            'user' => new UserResource($user->load('roles')),
             'roles' => Role::select('id', 'name')->get(),
         ]);
     }
