@@ -19,8 +19,6 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
     /**
-     * Summary of index
-     *
      * @return \Inertia\Response|\Inertia\ResponseFactory
      */
     public function index(): Response|ResponseFactory
@@ -33,8 +31,6 @@ class UserController extends Controller
     }
 
     /**
-     * Summary of create
-     *
      * @return \Inertia\Response|\Inertia\ResponseFactory
      */
     public function create(): Response|ResponseFactory
@@ -80,8 +76,6 @@ class UserController extends Controller
     }
 
     /**
-     * Summary of edit
-     *
      * @param  \App\Models\User  $user
      * @return \Inertia\Response|\Inertia\ResponseFactory
      */
@@ -97,8 +91,6 @@ class UserController extends Controller
     }
 
     /**
-     * Summary of update
-     *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\RedirectResponse
@@ -127,8 +119,6 @@ class UserController extends Controller
     }
 
     /**
-     * Summary of destroy
-     *
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */

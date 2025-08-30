@@ -39,6 +39,7 @@ Additional tools and references:
 * **Spatie Laravel Data (DTO)** — [Installation & Setup](https://spatie.be/docs/laravel-data/v4/installation-setup)
 * **Laravel Actions** — [Introduction](https://www.laravelactions.com/)
 * **Spatie Laravel Permission** — [Installation](https://spatie.be/docs/laravel-permission/v6/installation-laravel)
+* **IDE Helper Generator for Laravel** — [Installation](https://github.com/barryvdh/laravel-ide-helper)
 
 > **Tip:** You can adjust permissions in the `logViewerRule` method inside `AppServiceProvider`.
 
