@@ -6,18 +6,23 @@ namespace App\Enum;
 
 enum PermissionEnum: string
 {
-    case USER_VIEW = 'view_user';
-    case USER_CREATE = 'create_user';
-    case USER_UPDATE = 'update_user';
-    case USER_DELETE = 'delete_user';
+    case BACKUP_VIEW = 'backup_view';
+    case BACKUP_GENERATE = 'backup_generate';
+    case BACKUP_DOWNLOAD = 'backup_download';
+    case BACKUP_DELETE = 'backup_delete';
 
-    case ROLE_VIEW = 'view_role';
-    case ROLE_CREATE = 'create_role';
-    case ROLE_UPDATE = 'update_role';
-    case ROLE_DELETE = 'delete_role';
-    case PERMISSION_VIEW = 'view_permission';
+    case USER_VIEW = 'user_view';
+    case USER_CREATE = 'user_create';
+    case USER_UPDATE = 'user_update';
+    case USER_DELETE = 'user_delete';
 
-    case PERMISSION_CREATE = 'create_permission';
-    case PERMISSION_UPDATE = 'update_permission';
-    case PERMISSION_DELETE = 'delete_permission';
+    case ROLE_VIEW = 'role_view';
+    case ROLE_CREATE = 'role_create';
+    case ROLE_UPDATE = 'role_update';
+    case ROLE_DELETE = 'role_delete';
+
+    case PERMISSION_VIEW = 'permission_view';
+    case PERMISSION_CREATE = 'permission_create';
+    case PERMISSION_UPDATE = 'permission_update';
+    case PERMISSION_DELETE = 'permission_delete';
 }

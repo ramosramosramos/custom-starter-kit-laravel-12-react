@@ -3,7 +3,7 @@ import AddButton from '@/components/buttons/add-button';
 import DeleteButton from '@/components/buttons/delete-button';
 import EditButton from '@/components/buttons/edit-button';
 import TableCompound from '@/components/compounds/table-compound';
-import ConfirmInputDialog from '@/components/dialogs/confim-input-dialog';
+import ConfirmInputDialog from '@/components/dialogs/confirm-input-dialog';
 import DefaultPaginator from '@/components/paginators/default-paginator';
 import AppLayout from '@/layouts/app-layout';
 import { playAudio } from '@/lib/audios/play-audio-message';

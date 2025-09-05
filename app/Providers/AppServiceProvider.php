@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
+use App\Enum\PermissionEnum;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
@@ -12,7 +13,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
-
+use Illuminate\Auth\Access\Response;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -28,6 +29,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        collect(PermissionEnum::cases())->each(function ($permission) {
+            Gate::define($permission->value, function (User $user) use ($permission) {
+                return $user->hasPermissionTo($permission->value) ? Response::allow() : Response::denyAsNotFound();
+            });
+        });
         $this->setupCommandsSafely();
         $this->tuneModelBehavior();
         $this->enforceSecureUrls();
@@ -58,7 +64,7 @@ class AppServiceProvider extends ServiceProvider
      */
     private function enforceSecureUrls(): void
     {
-        if (! $this->app->environment('local')) {
+        if (!$this->app->environment('local')) {
             URL::forceScheme('https');
         }
     }

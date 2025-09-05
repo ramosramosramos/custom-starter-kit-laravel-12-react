@@ -39,6 +39,7 @@ export interface User {
     email_verified_at: string | null;
     created_at: string;
     updated_at: string;
+    can: Can;
     [key: string]: unknown; // This allows for additional properties...
 }
 
@@ -53,3 +54,22 @@ export type FormDataType<T extends { [key: string]: string | number | boolean | 
 export type Filter = FormDataType<{
     search?: string;
 }>;
+
+export type Can ={
+    backup_view: string
+  backup_generate: string
+  backup_download: string
+  backup_delete: string
+  user_view: string
+  user_create: string
+  user_update: string
+  user_delete: string
+  role_view: string
+  role_create: string
+  role_update: string
+  role_delete: string
+  permission_view: string
+  permission_create: string
+  permission_update: string
+  permission_delete: string
+}
