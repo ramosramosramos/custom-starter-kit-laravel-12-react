@@ -3,6 +3,7 @@ import AddButton from '@/components/buttons/add-button';
 import DeleteButton from '@/components/buttons/delete-button';
 import EditButton from '@/components/buttons/edit-button';
 import TableCompound from '@/components/compounds/table-compound';
+import ConfirmInputDialog from '@/components/dialogs/confim-input-dialog';
 import DefaultPaginator from '@/components/paginators/default-paginator';
 import AppLayout from '@/layouts/app-layout';
 import { playAudio } from '@/lib/audios/play-audio-message';
@@ -61,8 +62,10 @@ function UserTable({ users }: { users: UserProps['users'] }) {
                         <TableCompound.Cell>{user.role}</TableCompound.Cell>
                         <TableCompound.Cell className="flex w-[max-content] items-center gap-2">
                             <EditButton onClick={() => router.visit(UserController.edit(user.id))}>Edit</EditButton>
-                            <DeleteButton
-                                onClick={() =>
+                            <ConfirmInputDialog
+                                title="Deleting user"
+                                reference={user.name.trim()}
+                                onConfirm={() => {
                                     router.delete(UserController.destroy(user.id), {
                                         preserveScroll: true,
                                         onSuccess: () => {
@@ -72,11 +75,11 @@ function UserTable({ users }: { users: UserProps['users'] }) {
                                         onError: () => {
                                             notifyToast.error('Failed to delete');
                                         },
-                                    })
-                                }
+                                    });
+                                }}
                             >
-                                Delete
-                            </DeleteButton>
+                                <DeleteButton>Delete</DeleteButton>
+                            </ConfirmInputDialog>
                         </TableCompound.Cell>
                     </TableCompound.Row>
                 ))}
