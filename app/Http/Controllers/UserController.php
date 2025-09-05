@@ -44,9 +44,6 @@ class UserController extends Controller
     }
 
     /**
-     * Summary of store
-     *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request): RedirectResponse
@@ -76,7 +73,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param  \App\Models\User  $user
      * @return \Inertia\Response|\Inertia\ResponseFactory
      */
     public function edit(User $user): Response|ResponseFactory
@@ -91,8 +87,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, User $user): RedirectResponse
@@ -119,7 +113,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param  \App\Models\User  $user
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(User $user): RedirectResponse
