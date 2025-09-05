@@ -40,6 +40,7 @@ Additional tools and references:
 * **Laravel Actions** — [Introduction](https://www.laravelactions.com/)
 * **Spatie Laravel Permission** — [Installation](https://spatie.be/docs/laravel-permission/v6/installation-laravel)
 * **IDE Helper Generator for Laravel** — [Installation](https://github.com/barryvdh/laravel-ide-helper)
+* **Laravel Backup** — [Installation](https://github.com/spatie/laravel-backup)
 
 > **Tip:** You can adjust permissions in the `logViewerRule` method inside `AppServiceProvider`.
 
@@ -76,18 +77,15 @@ php artisan migrate
 # (Optional) Seed the database
 php artisan db:seed
 
+# Clear cache and optimize && Laravel Wayfinder
+composer optimize
+
 # Build frontend assets (development)
 npm run dev
-
-# Clear cache and optimize
-php artisan optimize:clear
-php artisan optimize
-
-# Setup Laravel Wayfinder
-php artisan wayfinder
-
 # Start the Laravel server
 php artisan serve
+# Start the workers
+php artisan queue:work
 ```
 
 ---
@@ -97,9 +95,8 @@ php artisan serve
 After making changes to backend code:
 
 ```bash
-php artisan optimize:clear
-php artisan optimize
-php artisan wayfinder
+composer optimize
+composer format app
 ```
 
 💡 If you are only working on backend changes, you can stop the Node.js dev server (`npm run dev`) to avoid unnecessary asset watching.

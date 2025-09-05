@@ -6,6 +6,7 @@ namespace App\Providers;
 
 use App\Enum\PermissionEnum;
 use App\Models\User;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
@@ -13,7 +14,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 use Opcodes\LogViewer\Facades\LogViewer;
-use Illuminate\Auth\Access\Response;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -64,7 +65,7 @@ class AppServiceProvider extends ServiceProvider
      */
     private function enforceSecureUrls(): void
     {
-        if (!$this->app->environment('local')) {
+        if (! $this->app->environment('local')) {
             URL::forceScheme('https');
         }
     }

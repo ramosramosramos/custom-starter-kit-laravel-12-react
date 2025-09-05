@@ -21,7 +21,8 @@ class BackupController extends Controller
     {
         $this->authorize(PermissionEnum::BACKUP_VIEW->value);
         // Just use the relative path under the disk root
-        $files = Storage::disk('backups')->files(config('app.name'));
+        // @phpstan-ignore-next-line
+        $files = Storage::disk('backups')->files(config('app.name', 'Laravel'));
 
         // Return mapped backup info
         $backups = collect($files)->map(function ($file): array {
@@ -59,7 +60,6 @@ class BackupController extends Controller
         $this->authorize(PermissionEnum::BACKUP_DELETE->value);
         $disk = Storage::disk('backups');
 
-        // @phpstan-ignore-next-line
         $decodedPath = urldecode((string) $request->string('path'));
 
         if ($disk->exists($decodedPath)) {
@@ -77,13 +77,14 @@ class BackupController extends Controller
     {
         $this->authorize(PermissionEnum::BACKUP_DOWNLOAD->value);
         $disk = Storage::disk('backups');
-        $path = config('app.name') . '/' . $request->string('path');
+        // @phpstan-ignore-next-line
+        $path = config('app.name').'/'.$request->string('path');
 
-        if (!$disk->exists($path)) {
+        if (! $disk->exists($path)) {
             abort(404, 'Backup file not found.');
         }
 
-
+        // @phpstan-ignore-next-line
         return response()->download($disk->path($path), $request->string('path'));
 
     }
@@ -101,6 +102,6 @@ class BackupController extends Controller
 
         $bytes /= pow(1024, $pow);
 
-        return round($bytes, $precision) . ' ' . $units[$pow];
+        return round($bytes, $precision).' '.$units[$pow];
     }
 }

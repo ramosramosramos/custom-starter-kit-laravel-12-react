@@ -37,9 +37,7 @@ export default function Index({ backups }: { backups: Backup[] }) {
                 <Head title="Backups" />
                 <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                     <div className="flex justify-end p-1">
-                        {can?.backup_generate &&
-                            <Button onClick={handleGenerateBackup}>Generate backup</Button>
-                        }
+                        {can?.backup_generate && <Button onClick={handleGenerateBackup}>Generate backup</Button>}
                     </div>
 
                     <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl md:min-h-min md:p-5">
@@ -76,8 +74,7 @@ function BackupTable({ backups }: { backups: Backup[] }) {
                             <TableCompound.Cell>{backup.size}</TableCompound.Cell>
                             <TableCompound.Cell>{backup.generated_at}</TableCompound.Cell>
                             <TableCompound.Cell className="flex items-center gap-1.5">
-                                {
-                                    can?.backup_delete &&
+                                {can?.backup_delete && (
                                     <ConfirmInputDialog
                                         title="Deleting user"
                                         reference={backup.path.trim()}
@@ -93,10 +90,8 @@ function BackupTable({ backups }: { backups: Backup[] }) {
                                     >
                                         <DeleteButton>Force Delete</DeleteButton>
                                     </ConfirmInputDialog>
-                                }
-                                {
-                                    can?.backup_download &&
-
+                                )}
+                                {can?.backup_download && (
                                     <a
                                         target="_blank"
                                         href={
@@ -110,7 +105,7 @@ function BackupTable({ backups }: { backups: Backup[] }) {
                                     >
                                         Download
                                     </a>
-                                }
+                                )}
                             </TableCompound.Cell>
                         </TableCompound.Row>
                     ))}
