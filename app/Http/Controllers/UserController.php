@@ -69,7 +69,7 @@ class UserController extends Controller
 
         $user->syncRoles($validated['role']);
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success',"User created successfully.");
     }
 
     /**
@@ -109,7 +109,7 @@ class UserController extends Controller
 
         $user->syncRoles($validated['role']);
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success',"User updated successfully.");
     }
 
     /**
@@ -120,6 +120,6 @@ class UserController extends Controller
         $this->authorize(PermissionEnum::USER_DELETE->value);
         $user->delete();
 
-        return redirect()->route('users.index');
+        return redirect()->route('users.index')->with('success',value: "User deleted successfully.");
     }
 }

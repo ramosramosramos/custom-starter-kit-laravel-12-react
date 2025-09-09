@@ -26,10 +26,16 @@ export interface SharedData {
     name: string;
     quote: { message: string; author: string };
     auth: Auth;
+    flash: Flash;
     ziggy: Config & { location: string };
     sidebarOpen: boolean;
     [key: string]: unknown;
 }
+
+export type Flash = {
+    success?: string;
+    error?: string;
+};
 
 export interface User {
     id: number;

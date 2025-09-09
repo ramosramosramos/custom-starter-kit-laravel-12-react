@@ -6,7 +6,6 @@ import TableCompound from '@/components/compounds/table-compound';
 import ConfirmInputDialog from '@/components/dialogs/confirm-input-dialog';
 import DefaultPaginator from '@/components/paginators/default-paginator';
 import AppLayout from '@/layouts/app-layout';
-import { playAudio } from '@/lib/audios/play-audio-message';
 import { notifyToast } from '@/lib/hot-notification/notify-toast';
 import { type BreadcrumbItem } from '@/types';
 import { UserProps } from '@/types/user/user-type';
@@ -68,10 +67,6 @@ function UserTable({ users }: { users: UserProps['users'] }) {
                                 onConfirm={() => {
                                     router.delete(UserController.destroy(user.id), {
                                         preserveScroll: true,
-                                        onSuccess: () => {
-                                            notifyToast.success('Successfully deleted');
-                                            playAudio('success');
-                                        },
                                         onError: () => {
                                             notifyToast.error('Failed to delete');
                                         },
