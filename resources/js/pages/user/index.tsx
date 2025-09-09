@@ -8,8 +8,9 @@ import DefaultPaginator from '@/components/paginators/default-paginator';
 import AppLayout from '@/layouts/app-layout';
 import { notifyToast } from '@/lib/hot-notification/notify-toast';
 import { type BreadcrumbItem } from '@/types';
-import { UserProps } from '@/types/user/user-type';
+import { Permission, UserProps } from '@/types/user/user-type';
 import { Head, router } from '@inertiajs/react';
+import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -49,6 +50,7 @@ function UserTable({ users }: { users: UserProps['users'] }) {
                     <TableCompound.Head>Name</TableCompound.Head>
                     <TableCompound.Head>Email</TableCompound.Head>
                     <TableCompound.Head>Role</TableCompound.Head>
+                    <TableCompound.Head>Permissions</TableCompound.Head>
                     <TableCompound.Head>Actions</TableCompound.Head>
                 </TableCompound.Row>
             </TableCompound.Header>
@@ -59,6 +61,10 @@ function UserTable({ users }: { users: UserProps['users'] }) {
                         <TableCompound.Cell>{user.name}</TableCompound.Cell>
                         <TableCompound.Cell>{user.email}</TableCompound.Cell>
                         <TableCompound.Cell>{user.role}</TableCompound.Cell>
+                        <TableCompound.Cell>
+                            <PermissionsCell permissions={user.permissions} />
+                        </TableCompound.Cell>
+
                         <TableCompound.Cell className="flex w-[max-content] items-center gap-2">
                             {user.can_be.updated && <EditButton onClick={() => router.visit(UserController.edit(user.id))}>Edit</EditButton>}
                             {user.can_be.deleted && (
@@ -82,5 +88,26 @@ function UserTable({ users }: { users: UserProps['users'] }) {
                 ))}
             </TableCompound.Body>
         </TableCompound>
+    );
+}
+function PermissionsCell({ permissions }: { permissions: Permission[] }) {
+    const [expanded, setExpanded] = useState(false);
+
+    const visiblePermissions = expanded ? permissions : permissions.slice(0, 3); // show first 3 only
+
+    return (
+        <div className="flex max-w-[250px] transform flex-wrap items-center gap-2 transition-all duration-300">
+            {visiblePermissions.map((permission) => (
+                <div key={permission.id}>
+                    <span className="rounded-full bg-orange-500 px-2 capitalize underline">{permission.name.replaceAll('_', ' ')}</span>
+                    ,
+                </div>
+            ))}
+            {permissions.length > 3 && (
+                <button onClick={() => setExpanded(!expanded)} className="text-sm text-blue-600 hover:underline cursor-pointer">
+                    {expanded ? 'Show less' : `+${permissions.length - 3} more`}
+                </button>
+            )}
+        </div>
     );
 }

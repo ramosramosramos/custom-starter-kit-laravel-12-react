@@ -14,7 +14,8 @@ class UserService
      */
     public function getUsers(): LengthAwarePaginator
     {
-        return User::with(['roles'])
+        return User::with(['roles:id,name', 'permissions:id,name'])
+            ->select(['id', 'name', 'email'])
             ->paginate(10);
     }
 }

@@ -9,6 +9,7 @@ export type User = {
     created_at: string;
     updated_at: string;
     can_be: CanBe;
+    permissions: Permission[]
 };
 export type UserProps = {
     users: {
@@ -22,3 +23,9 @@ export type CanBe = {
     updated: boolean;
     deleted: boolean;
 };
+
+
+export type Permission = {
+    id: number;
+    name: string;
+}

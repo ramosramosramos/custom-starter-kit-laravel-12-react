@@ -8,6 +8,7 @@ use App\Enum\RoleEnum;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Spatie\Permission\Models\Permission;
 
 class UserResource extends JsonResource
 {
@@ -31,6 +32,12 @@ class UserResource extends JsonResource
             'name' => $user->name,
             'email' => $user->email,
             'role' => $role,
+            'permissions' => collect($user->permissions)->map(function (Permission $permission) {
+                return [
+                    'id' => $permission->id,
+                    'name' => $permission->name,
+                ];
+            }),
             'can_be' => [
                 'updated' => $role !== RoleEnum::SUPER_ADMIN->value,
                 'deleted' => $role !== RoleEnum::SUPER_ADMIN->value,
