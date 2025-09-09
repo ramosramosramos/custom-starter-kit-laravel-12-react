@@ -22,7 +22,7 @@ type Role = {
 export default function UserForm({ formAbility }: UserFormProps) {
     const { user, roles } = usePage<UserFormPageProps>().props;
 
-    const { data, setData, errors, processing, post, put } = useForm<OmitKeys<User, 'id' | 'created_at' | 'updated_at' | 'can_be'|'permissions'>>({
+    const { data, setData, errors, processing, post, put } = useForm<OmitKeys<User, 'id' | 'created_at' | 'updated_at' | 'can_be' | 'permissions'>>({
         name: user?.name ?? '',
         email: user?.email ?? '',
         role: user?.role ?? '',

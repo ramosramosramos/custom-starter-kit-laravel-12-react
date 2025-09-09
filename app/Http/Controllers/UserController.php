@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Response;
 use Inertia\ResponseFactory;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -111,6 +112,37 @@ class UserController extends Controller
         $user->syncRoles($validated['role']);
 
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
+    }
+
+    /**
+     * @return Response
+     */
+    public function editPermission(User $user): Response|ResponseFactory
+    {
+        $this->authorize(PermissionEnum::USER_UPDATE->value);
+
+        return inertia('user/edit-permission', [
+            'user' => new UserResource($user->load('permissions')),
+            'permissions' => Permission::select('id', 'name')->get(),
+        ]);
+    }
+
+    /**
+     * @return RedirectResponse
+     */
+    public function updatePermission(Request $request, User $user): RedirectResponse
+    {
+        $this->authorize(PermissionEnum::USER_UPDATE->value);
+        /**
+         * @var array<string,string[]> $validated
+         */
+        $validated = $request->validate([
+            'permissions' => ['required', 'array'],
+            'permissions.*' => ['required', 'string', 'exists:permissions,name'],
+        ]);
+        $user->syncPermissions($validated['permissions']);
+
+        return redirect()->route('users.index')->with('success', 'User permissions updated successfully.');
     }
 
     /**

@@ -20,6 +20,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('backups/download', [BackupController::class, 'download'])->name('backups.download');
 
     Route::resource('users', UserController::class)->except(['show']);
+    Route::get('users/{user}/edit-permission', [UserController::class,'editPermission'])->name('users.editPermission');
+    Route::put('users/{user}/update-permission', [UserController::class,'updatePermission'])->name('users.updatePermission');
+
 });
 
 require __DIR__ . '/settings.php';

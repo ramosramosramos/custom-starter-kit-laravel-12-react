@@ -5,6 +5,7 @@ import EditButton from '@/components/buttons/edit-button';
 import TableCompound from '@/components/compounds/table-compound';
 import ConfirmInputDialog from '@/components/dialogs/confirm-input-dialog';
 import DefaultPaginator from '@/components/paginators/default-paginator';
+import { useCan } from '@/hooks/use-can';
 import AppLayout from '@/layouts/app-layout';
 import { notifyToast } from '@/lib/hot-notification/notify-toast';
 import { type BreadcrumbItem } from '@/types';
@@ -41,6 +42,7 @@ export default function Index({ users, filter }: UserProps) {
 }
 
 function UserTable({ users }: { users: UserProps['users'] }) {
+    const can = useCan();
     return (
         <TableCompound>
             <TableCompound.Caption>A list of the users.</TableCompound.Caption>
@@ -66,22 +68,39 @@ function UserTable({ users }: { users: UserProps['users'] }) {
                         </TableCompound.Cell>
 
                         <TableCompound.Cell className="flex w-[max-content] items-center gap-2">
-                            {user.can_be.updated && <EditButton onClick={() => router.visit(UserController.edit(user.id))}>Edit</EditButton>}
+                            {user.can_be.updated && (
+                                <span>
+                                    {can?.user_update && (
+                                        <EditButton onClick={() => router.visit(UserController.editPermission(user.id))}>Edit Permissions</EditButton>
+                                    )}
+                                </span>
+                            )}
+                            {user.can_be.updated && (
+                                <span>
+                                    {can?.user_update && (
+                                        <EditButton onClick={() => router.visit(UserController.edit(user.id))}>Edit Info</EditButton>
+                                    )}
+                                </span>
+                            )}
                             {user.can_be.deleted && (
-                                <ConfirmInputDialog
-                                    title="Deleting user"
-                                    reference={user.name.trim()}
-                                    onConfirm={() => {
-                                        router.delete(UserController.destroy(user.id), {
-                                            preserveScroll: true,
-                                            onError: () => {
-                                                notifyToast.error('Failed to delete');
-                                            },
-                                        });
-                                    }}
-                                >
-                                    <DeleteButton>Delete</DeleteButton>
-                                </ConfirmInputDialog>
+                                <span>
+                                    {can?.user_delete && (
+                                        <ConfirmInputDialog
+                                            title="Deleting user"
+                                            reference={user.name.trim()}
+                                            onConfirm={() => {
+                                                router.delete(UserController.destroy(user.id), {
+                                                    preserveScroll: true,
+                                                    onError: () => {
+                                                        notifyToast.error('Failed to delete');
+                                                    },
+                                                });
+                                            }}
+                                        >
+                                            <DeleteButton>Delete</DeleteButton>
+                                        </ConfirmInputDialog>
+                                    )}
+                                </span>
                             )}
                         </TableCompound.Cell>
                     </TableCompound.Row>
@@ -99,12 +118,11 @@ function PermissionsCell({ permissions }: { permissions: Permission[] }) {
         <div className="flex max-w-[250px] transform flex-wrap items-center gap-2 transition-all duration-300">
             {visiblePermissions.map((permission) => (
                 <div key={permission.id}>
-                    <span className="rounded-full bg-orange-500 px-2 capitalize underline">{permission.name.replaceAll('_', ' ')}</span>
-                    ,
+                    <span className="rounded-full bg-orange-500 px-2 capitalize underline">{permission.name.replaceAll('_', ' ')}</span>,
                 </div>
             ))}
             {permissions.length > 3 && (
-                <button onClick={() => setExpanded(!expanded)} className="text-sm text-blue-600 hover:underline cursor-pointer">
+                <button onClick={() => setExpanded(!expanded)} className="cursor-pointer text-sm text-blue-600 hover:underline">
                     {expanded ? 'Show less' : `+${permissions.length - 3} more`}
                 </button>
             )}
