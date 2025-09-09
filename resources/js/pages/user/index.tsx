@@ -60,21 +60,23 @@ function UserTable({ users }: { users: UserProps['users'] }) {
                         <TableCompound.Cell>{user.email}</TableCompound.Cell>
                         <TableCompound.Cell>{user.role}</TableCompound.Cell>
                         <TableCompound.Cell className="flex w-[max-content] items-center gap-2">
-                            <EditButton onClick={() => router.visit(UserController.edit(user.id))}>Edit</EditButton>
-                            <ConfirmInputDialog
-                                title="Deleting user"
-                                reference={user.name.trim()}
-                                onConfirm={() => {
-                                    router.delete(UserController.destroy(user.id), {
-                                        preserveScroll: true,
-                                        onError: () => {
-                                            notifyToast.error('Failed to delete');
-                                        },
-                                    });
-                                }}
-                            >
-                                <DeleteButton>Delete</DeleteButton>
-                            </ConfirmInputDialog>
+                            {user.can_be.updated && <EditButton onClick={() => router.visit(UserController.edit(user.id))}>Edit</EditButton>}
+                            {user.can_be.deleted && (
+                                <ConfirmInputDialog
+                                    title="Deleting user"
+                                    reference={user.name.trim()}
+                                    onConfirm={() => {
+                                        router.delete(UserController.destroy(user.id), {
+                                            preserveScroll: true,
+                                            onError: () => {
+                                                notifyToast.error('Failed to delete');
+                                            },
+                                        });
+                                    }}
+                                >
+                                    <DeleteButton>Delete</DeleteButton>
+                                </ConfirmInputDialog>
+                            )}
                         </TableCompound.Cell>
                     </TableCompound.Row>
                 ))}

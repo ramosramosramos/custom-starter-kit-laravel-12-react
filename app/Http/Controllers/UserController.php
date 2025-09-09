@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Enum\PermissionEnum;
+use App\Enum\RoleEnum;
 use App\Http\Resources\User\UserResource;
 use App\Http\Rules\UserRule;
 use App\Models\User;
@@ -69,7 +70,7 @@ class UserController extends Controller
 
         $user->syncRoles($validated['role']);
 
-        return redirect()->route('users.index')->with('success',"User created successfully.");
+        return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
 
     /**
@@ -109,7 +110,7 @@ class UserController extends Controller
 
         $user->syncRoles($validated['role']);
 
-        return redirect()->route('users.index')->with('success',"User updated successfully.");
+        return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
     /**
@@ -117,9 +118,12 @@ class UserController extends Controller
      */
     public function destroy(User $user): RedirectResponse
     {
+        if ($user->hasRole(RoleEnum::SUPER_ADMIN->value)) {
+            abort(404);
+        }
         $this->authorize(PermissionEnum::USER_DELETE->value);
         $user->delete();
 
-        return redirect()->route('users.index')->with('success',value: "User deleted successfully.");
+        return redirect()->route('users.index')->with('success', value: 'User deleted successfully.');
     }
 }

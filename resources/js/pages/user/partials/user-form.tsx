@@ -2,8 +2,6 @@ import UserController from '@/actions/App/Http/Controllers/UserController';
 import SelectCompound from '@/components/compounds/select-compound';
 import InputGroup from '@/components/inputs/input-group';
 import { Button } from '@/components/ui/button';
-import { playAudio } from '@/lib/audios/play-audio-message';
-import { notifyToast } from '@/lib/hot-notification/notify-toast';
 import { FormAbility, OmitKeys } from '@/types';
 import { User } from '@/types/user/user-type';
 import { useForm, usePage } from '@inertiajs/react';
@@ -24,7 +22,7 @@ type Role = {
 export default function UserForm({ formAbility }: UserFormProps) {
     const { user, roles } = usePage<UserFormPageProps>().props;
 
-    const { data, setData, errors, processing, post, put } = useForm<OmitKeys<User, 'id' | 'created_at' | 'updated_at'>>({
+    const { data, setData, errors, processing, post, put } = useForm<OmitKeys<User, 'id' | 'created_at' | 'updated_at' | 'can_be'>>({
         name: user?.name ?? '',
         email: user?.email ?? '',
         role: user?.role ?? '',
@@ -35,19 +33,11 @@ export default function UserForm({ formAbility }: UserFormProps) {
         if (formAbility === 'create') {
             post(UserController.store().url, {
                 preserveScroll: true,
-                onSuccess: () => {
-                    notifyToast.success('User created!');
-                    playAudio('success');
-                },
             });
         }
         if (formAbility === 'edit') {
             put(UserController.update({ user: user?.id as number }).url, {
                 preserveScroll: true,
-                onSuccess: () => {
-                    notifyToast.success('User updated!');
-                    playAudio('success');
-                },
             });
         }
     };

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources\User;
 
+use App\Enum\RoleEnum;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -30,6 +31,10 @@ class UserResource extends JsonResource
             'name' => $user->name,
             'email' => $user->email,
             'role' => $role,
+            'can_be' => [
+                'updated' => $role !== RoleEnum::SUPER_ADMIN->value,
+                'deleted' => $role !== RoleEnum::SUPER_ADMIN->value,
+            ],
         ];
     }
 }

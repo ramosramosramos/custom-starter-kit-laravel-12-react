@@ -8,6 +8,7 @@ export type User = {
     role: string;
     created_at: string;
     updated_at: string;
+    can_be: CanBe;
 };
 export type UserProps = {
     users: {
@@ -15,4 +16,9 @@ export type UserProps = {
         meta: Meta;
     };
     filter: Filter;
+};
+
+export type CanBe = {
+    updated: boolean;
+    deleted: boolean;
 };
