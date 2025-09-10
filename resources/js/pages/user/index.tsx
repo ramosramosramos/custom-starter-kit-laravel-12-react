@@ -118,7 +118,7 @@ function PermissionsCell({ permissions }: { permissions: Permission[] }) {
         <div className="flex max-w-[250px] transform flex-wrap items-center gap-2 transition-all duration-300">
             {visiblePermissions.map((permission) => (
                 <div key={permission.id}>
-                    <span className="rounded-full bg-orange-500 px-2 capitalize underline">{permission.name.replaceAll('_', ' ')}</span>,
+                    <span className="rounded-full  px-2 text-primary dark:text-white  capitalize underline">{permission.name.replaceAll('_', ' ')}</span>,
                 </div>
             ))}
             {permissions.length > 3 && (
