@@ -8,12 +8,14 @@ use Database\Seeders\DatabaseSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use function PHPUnit\Framework\assertContainsEquals;
+use function PHPUnit\Framework\assertTrue;
 
 class UserTest extends TestCase
 {
     use RefreshDatabase;
 
-    
+
     /**
      * A basic feature test example.
      */
@@ -84,6 +86,23 @@ class UserTest extends TestCase
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+    }
+    public function test_can_update_user_permissions(): void
+    {
+        $user = User::factory()->create();
+        $user->givePermissionTo(PermissionEnum::USER_UPDATE->value);
+
+
+        $response = $this->actingAs($user)->put(route('users.updatePermission', $user), [
+            'permissions' => collect(PermissionEnum::cases())->map(fn(PermissionEnum $q) => $q->value)->toArray()
+        ]);
+        $response->assertSessionHasNoErrors();
+        $response->assertRedirect(route('users.index'));
+        $response->assertStatus(302);
+
+        $user->refresh();
+        assertTrue($user->hasAllPermissions(collect(PermissionEnum::cases())->map(fn(PermissionEnum $q) => $q->value)->toArray()));
+
     }
 
     public function test_can_destroy_user(): void

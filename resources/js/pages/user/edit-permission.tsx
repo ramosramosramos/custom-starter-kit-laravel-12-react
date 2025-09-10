@@ -11,7 +11,7 @@ import { Head, useForm } from '@inertiajs/react';
 const breadcrumbs: BreadcrumbItem[] = [{ title: 'Edit User Permissions', href: '' }];
 
 type PermissionFormType = {
-    permissions: string[]; // store IDs only
+    permissions: string[]; // store names only
 };
 
 export default function Edit({ user, permissions }: { user: User; permissions: Permission[] }) {
