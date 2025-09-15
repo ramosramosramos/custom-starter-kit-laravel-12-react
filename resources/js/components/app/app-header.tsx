@@ -11,30 +11,13 @@ import { useInitials } from '@/hooks/use-initials';
 import { cn } from '@/lib/utils';
 import { type BreadcrumbItem, type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, Menu, Search } from 'lucide-react';
+import { Menu, Search } from 'lucide-react';
 import AppLogo from './app-logo';
 import AppLogoIcon from './app-logo-icon';
 
-const mainNavItems: NavItem[] = [
-    {
-        title: 'Dashboard',
-        href: '/dashboard',
-        icon: LayoutGrid,
-    },
-];
-
-const rightNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
-];
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible';
+import { useAdditionalNavItems } from '@/hooks/link-items/use-additional-nav-items';
+import { useMainNavItems } from '@/hooks/link-items/use-main-nav-items';
 
 const activeItemStyles = 'text-neutral-900 dark:bg-neutral-800 dark:text-neutral-100';
 
@@ -46,52 +29,15 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
     const page = usePage<SharedData>();
     const { auth } = page.props;
     const getInitials = useInitials();
+    const mainNavItems = useMainNavItems();
+    const rightNavItems = useAdditionalNavItems();
     return (
         <>
             <div className="border-b border-sidebar-border/80">
                 <div className="mx-auto flex h-16 items-center px-4 md:max-w-7xl">
                     {/* Mobile Menu */}
                     <div className="lg:hidden">
-                        <Sheet>
-                            <SheetTrigger asChild>
-                                <Button variant="ghost" size="icon" className="mr-2 h-[34px] w-[34px]">
-                                    <Menu className="h-5 w-5" />
-                                </Button>
-                            </SheetTrigger>
-                            <SheetContent side="left" className="flex h-full w-64 flex-col items-stretch justify-between bg-sidebar">
-                                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
-                                <SheetHeader className="flex justify-start text-left">
-                                    <AppLogoIcon className="h-6 w-6 fill-current text-black dark:text-white" />
-                                </SheetHeader>
-                                <div className="flex h-full flex-1 flex-col space-y-4 p-4">
-                                    <div className="flex h-full flex-col justify-between text-sm">
-                                        <div className="flex flex-col space-y-4">
-                                            {mainNavItems.map((item) => (
-                                                <Link key={item.title} href={item.href} className="flex items-center space-x-2 font-medium">
-                                                    {item.icon && <Icon iconNode={item.icon} className="h-5 w-5" />}
-                                                    <span>{item.title}</span>
-                                                </Link>
-                                            ))}
-                                        </div>
-
-                                        <div className="flex flex-col space-y-4">
-                                            {rightNavItems.map((item) => (
-                                                <a
-                                                    key={item.title}
-                                                    href={item.href}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="flex items-center space-x-2 font-medium"
-                                                >
-                                                    {item.icon && <Icon iconNode={item.icon} className="h-5 w-5" />}
-                                                    <span>{item.title}</span>
-                                                </a>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-                            </SheetContent>
-                        </Sheet>
+                        <MobileSheetMenu mainNavItems={mainNavItems} rightNavItems={rightNavItems} />
                     </div>
 
                     <Link href="/dashboard" prefetch className="flex items-center space-x-2">
@@ -100,28 +46,7 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
 
                     {/* Desktop Navigation */}
                     <div className="ml-6 hidden h-full items-center space-x-6 lg:flex">
-                        <NavigationMenu className="flex h-full items-stretch">
-                            <NavigationMenuList className="flex h-full items-stretch space-x-2">
-                                {mainNavItems.map((item, index) => (
-                                    <NavigationMenuItem key={index} className="relative flex h-full items-center">
-                                        <Link
-                                            href={item.href}
-                                            className={cn(
-                                                navigationMenuTriggerStyle(),
-                                                page.url === item.href && activeItemStyles,
-                                                'h-9 cursor-pointer px-3',
-                                            )}
-                                        >
-                                            {item.icon && <Icon iconNode={item.icon} className="mr-2 h-4 w-4" />}
-                                            {item.title}
-                                        </Link>
-                                        {page.url === item.href && (
-                                            <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>
-                                        )}
-                                    </NavigationMenuItem>
-                                ))}
-                            </NavigationMenuList>
-                        </NavigationMenu>
+                        <DesktopNavigationMenu mainNavItems={mainNavItems} />
                     </div>
 
                     <div className="ml-auto flex items-center space-x-2">
@@ -178,5 +103,152 @@ export function AppHeader({ breadcrumbs = [] }: AppHeaderProps) {
                 </div>
             )}
         </>
+    );
+}
+function MobileSheetMenu({ mainNavItems, rightNavItems }: { mainNavItems: NavItem[]; rightNavItems: NavItem[] }) {
+    const activeItemStyles = 'text-primary font-semibold border-l-2 border-primary pl-2';
+
+    return (
+        <Sheet>
+            <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="mr-2 h-[34px] w-[34px]">
+                    <Menu className="h-5 w-5" />
+                </Button>
+            </SheetTrigger>
+
+            <SheetContent side="left" className="flex h-full w-64 flex-col items-stretch justify-between bg-sidebar">
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                <SheetHeader className="flex justify-start text-left">
+                    <AppLogoIcon className="h-6 w-6 fill-current text-black dark:text-white" />
+                </SheetHeader>
+
+                <div className="flex h-full flex-1 flex-col space-y-4 p-4">
+                    <div className="flex h-full flex-col justify-between text-sm">
+                        {/* Main nav items */}
+                        <div className="flex flex-col space-y-2">
+                            {mainNavItems.map((item) => {
+                                const parentActive = item.isActive || item.children?.some((child) => child.isActive);
+
+                                return item.type === 'parent' ? (
+                                    <Collapsible key={item.title} defaultOpen={parentActive}>
+                                        <CollapsibleTrigger
+                                            className={cn('flex w-full items-center space-x-2 font-medium', parentActive && activeItemStyles)}
+                                        >
+                                            {item.icon && <Icon iconNode={item.icon} className="h-5 w-5" />}
+                                            <span>{item.title}</span>
+                                        </CollapsibleTrigger>
+                                        <CollapsibleContent className="mt-1 ml-6 flex flex-col space-y-2">
+                                            {item.children?.map(
+                                                (child) =>
+                                                    child.show && (
+                                                        <Link
+                                                            key={child.title}
+                                                            href={child.href}
+                                                            className={cn(
+                                                                'flex items-center space-x-2 text-sm font-normal',
+                                                                child.isActive && activeItemStyles,
+                                                            )}
+                                                        >
+                                                            {child.icon && <Icon iconNode={child.icon} className="h-4 w-4" />}
+                                                            <span>{child.title}</span>
+                                                        </Link>
+                                                    ),
+                                            )}
+                                        </CollapsibleContent>
+                                    </Collapsible>
+                                ) : (
+                                    <Link
+                                        key={item.title}
+                                        href={item.href}
+                                        className={cn('flex items-center space-x-2 font-medium', item.isActive && activeItemStyles)}
+                                    >
+                                        {item.icon && <Icon iconNode={item.icon} className="h-5 w-5" />}
+                                        <span>{item.title}</span>
+                                    </Link>
+                                );
+                            })}
+                        </div>
+
+                        {/* Right nav items */}
+                        <div className="flex flex-col space-y-2">
+                            {rightNavItems.map((item) => (
+                                <a
+                                    key={item.title}
+                                    href={item.href}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="flex items-center space-x-2 font-medium"
+                                >
+                                    {item.icon && <Icon iconNode={item.icon} className="h-5 w-5" />}
+                                    <span>{item.title}</span>
+                                </a>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </SheetContent>
+        </Sheet>
+    );
+}
+
+function DesktopNavigationMenu({ mainNavItems }: { mainNavItems: NavItem[] }) {
+    return (
+        <NavigationMenu className="flex h-full items-stretch">
+            <NavigationMenuList className="flex h-full items-stretch space-x-2">
+                {mainNavItems.map((item, index) => (
+                    <NavigationMenuItem key={index} className="relative flex h-full items-center">
+                        {item.type === 'parent' ? (
+                            <Collapsible key={index} className="relative">
+                                {/* Trigger */}
+                                <CollapsibleTrigger asChild>
+                                    <button
+                                        type="button" // ✅ Prevents form submission/page jump
+                                        className={cn(navigationMenuTriggerStyle(), 'flex h-9 cursor-pointer items-center gap-2 px-3')}
+                                    >
+                                        {item.icon && <Icon iconNode={item.icon} className="h-4 w-4" />}
+                                        {item.title}
+                                    </button>
+                                </CollapsibleTrigger>
+
+                                {/* Content */}
+                                <CollapsibleContent className="absolute top-full z-20 mt-2 w-48 rounded-md border bg-popover p-2 shadow-md">
+                                    <ul className="flex flex-col gap-1">
+                                        {item.children?.map(
+                                            (child) =>
+                                                child.show && (
+                                                    <li key={child.title}>
+                                                        <Link
+                                                            href={child.href}
+                                                            className={cn(
+                                                                'flex items-center rounded-md px-2 py-1.5 hover:bg-accent hover:text-accent-foreground',
+                                                                child.isActive && activeItemStyles,
+                                                            )}
+                                                        >
+                                                            {child.icon && <Icon iconNode={child.icon} className="mr-2 h-4 w-4" />}
+                                                            {child.title}
+                                                        </Link>
+                                                    </li>
+                                                ),
+                                        )}
+                                    </ul>
+                                </CollapsibleContent>
+                            </Collapsible>
+                        ) : (
+                            <>
+                                {/* Normal item */}
+                                <Link
+                                    href={item.href}
+                                    className={cn(navigationMenuTriggerStyle(), item.isActive && activeItemStyles, 'h-9 cursor-pointer px-3')}
+                                >
+                                    {item.icon && <Icon iconNode={item.icon} className="mr-2 h-4 w-4" />}
+                                    {item.title}
+                                </Link>
+                            </>
+                        )}
+                        {item.isActive && <div className="absolute bottom-0 left-0 h-0.5 w-full translate-y-px bg-black dark:bg-white"></div>}
+                    </NavigationMenuItem>
+                ))}
+            </NavigationMenuList>
+        </NavigationMenu>
     );
 }
