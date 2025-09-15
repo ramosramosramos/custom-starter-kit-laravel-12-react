@@ -8107,16 +8107,16 @@
         },
         {
             "name": "tightenco/ziggy",
-            "version": "v2.5.3",
+            "version": "v2.6.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/tighten/ziggy.git",
-                "reference": "0b3b521d2c55fbdb04b6721532f7f5f49d32f52b"
+                "reference": "cccc6035c109daab03a33926b3a8499bedbed01f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tighten/ziggy/zipball/0b3b521d2c55fbdb04b6721532f7f5f49d32f52b",
-                "reference": "0b3b521d2c55fbdb04b6721532f7f5f49d32f52b",
+                "url": "https://api.github.com/repos/tighten/ziggy/zipball/cccc6035c109daab03a33926b3a8499bedbed01f",
+                "reference": "cccc6035c109daab03a33926b3a8499bedbed01f",
                 "shasum": ""
             },
             "require": {
@@ -8171,9 +8171,9 @@
             ],
             "support": {
                 "issues": "https://github.com/tighten/ziggy/issues",
-                "source": "https://github.com/tighten/ziggy/tree/v2.5.3"
+                "source": "https://github.com/tighten/ziggy/tree/v2.6.0"
             },
-            "time": "2025-05-17T18:15:19+00:00"
+            "time": "2025-09-15T00:00:26+00:00"
         },
         {
             "name": "tijsverkoyen/css-to-inline-styles",
@@ -9055,16 +9055,16 @@
         },
         {
             "name": "larastan/larastan",
-            "version": "v3.6.1",
+            "version": "v3.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/larastan/larastan.git",
-                "reference": "3c223047e374befd1b64959784685d6ecccf66aa"
+                "reference": "2e653fd19585a825e283b42f38378b21ae481cc7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/larastan/larastan/zipball/3c223047e374befd1b64959784685d6ecccf66aa",
-                "reference": "3c223047e374befd1b64959784685d6ecccf66aa",
+                "url": "https://api.github.com/repos/larastan/larastan/zipball/2e653fd19585a825e283b42f38378b21ae481cc7",
+                "reference": "2e653fd19585a825e283b42f38378b21ae481cc7",
                 "shasum": ""
             },
             "require": {
@@ -9078,7 +9078,7 @@
                 "illuminate/pipeline": "^11.44.2 || ^12.4.1",
                 "illuminate/support": "^11.44.2 || ^12.4.1",
                 "php": "^8.2",
-                "phpstan/phpstan": "^2.1.11"
+                "phpstan/phpstan": "^2.1.23"
             },
             "require-dev": {
                 "doctrine/coding-standard": "^13",
@@ -9132,7 +9132,7 @@
             ],
             "support": {
                 "issues": "https://github.com/larastan/larastan/issues",
-                "source": "https://github.com/larastan/larastan/tree/v3.6.1"
+                "source": "https://github.com/larastan/larastan/tree/v3.7.1"
             },
             "funding": [
                 {
@@ -9140,7 +9140,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-25T07:24:56+00:00"
+            "time": "2025-09-10T19:42:11+00:00"
         },
         {
             "name": "laravel/pail",
@@ -9788,16 +9788,16 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.1.22",
+            "version": "2.1.25",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "41600c8379eb5aee63e9413fe9e97273e25d57e4"
+                "reference": "4087d28bd252895874e174d65e26b2c202ed893a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/41600c8379eb5aee63e9413fe9e97273e25d57e4",
-                "reference": "41600c8379eb5aee63e9413fe9e97273e25d57e4",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4087d28bd252895874e174d65e26b2c202ed893a",
+                "reference": "4087d28bd252895874e174d65e26b2c202ed893a",
                 "shasum": ""
             },
             "require": {
@@ -9842,7 +9842,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-08-04T19:17:37+00:00"
+            "time": "2025-09-12T14:26:42+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -10181,16 +10181,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "11.5.36",
+            "version": "11.5.39",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "264a87c7ef68b1ab9af7172357740dc266df5957"
+                "reference": "ad5597f79d8489d2870073ac0bc0dd0ad1fa9931"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/264a87c7ef68b1ab9af7172357740dc266df5957",
-                "reference": "264a87c7ef68b1ab9af7172357740dc266df5957",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ad5597f79d8489d2870073ac0bc0dd0ad1fa9931",
+                "reference": "ad5597f79d8489d2870073ac0bc0dd0ad1fa9931",
                 "shasum": ""
             },
             "require": {
@@ -10262,7 +10262,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/phpunit/issues",
                 "security": "https://github.com/sebastianbergmann/phpunit/security/policy",
-                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.36"
+                "source": "https://github.com/sebastianbergmann/phpunit/tree/11.5.39"
             },
             "funding": [
                 {
@@ -10286,7 +10286,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2025-09-03T06:24:17+00:00"
+            "time": "2025-09-14T06:20:41+00:00"
         },
         {
             "name": "sebastian/cli-parser",

@@ -21,6 +21,8 @@ export interface NavItem {
     icon?: LucideIcon | null;
     isActive?: boolean;
     show: string | undefined;
+    type: 'parent' | 'normal';
+    children?: NavItem[];
 }
 
 export interface SharedData {
