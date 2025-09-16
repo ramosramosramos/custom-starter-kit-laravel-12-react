@@ -27,7 +27,7 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                                         </CollapsibleTrigger>
 
                                         {/* Children links */}
-                                        <CollapsibleContent className="space-y-1 pl-4">
+                                        <CollapsibleContent className="space-y-1 pl-4 pt-1">
                                             {item.children?.map(
                                                 (child) =>
                                                     child.show && (
