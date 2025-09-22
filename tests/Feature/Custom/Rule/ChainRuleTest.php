@@ -3,9 +3,9 @@
 namespace Tests\Feature\Custom\Rule;
 
 use Tests\TestCase;
-use App\Http\Rules\ChainRule;
-use Illuminate\Validation\Rule;
+use KentJerone\ChainRule\ChainRule;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+
 class ChainRuleTest extends TestCase
 {
     use RefreshDatabase;

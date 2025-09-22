@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "926589b0d49ce1c4e3a92e46abf0f733",
+    "content-hash": "67b570c9d9e84ef772343fe7c761dcc1",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2080,6 +2080,50 @@
                 "source": "https://github.com/kelunik/certificate/tree/v1.1.3"
             },
             "time": "2023-02-03T21:26:53+00:00"
+        },
+        {
+            "name": "kentjerone/laravel-chain-rule",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ramosramosramos/laravel-chain-rule.git",
+                "reference": "a7eb65c1613ec779e39d63e8779111c525fa9ee0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ramosramosramos/laravel-chain-rule/zipball/a7eb65c1613ec779e39d63e8779111c525fa9ee0",
+                "reference": "a7eb65c1613ec779e39d63e8779111c525fa9ee0",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^10.0 || ^11.0 || ^12.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "10"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "KentJerone\\ChainRule\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "ramosramosramos",
+                    "email": "ramosramosramosramos12@gmail.com"
+                }
+            ],
+            "description": "A chainable rule builder for laravel validation.",
+            "support": {
+                "issues": "https://github.com/ramosramosramos/laravel-chain-rule/issues",
+                "source": "https://github.com/ramosramosramos/laravel-chain-rule/tree/v1.0.0"
+            },
+            "time": "2025-09-22T05:58:31+00:00"
         },
         {
             "name": "laravel/framework",
