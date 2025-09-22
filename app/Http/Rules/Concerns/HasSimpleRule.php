@@ -130,27 +130,6 @@ trait HasSimpleRule
         return $this;
     }
 
-    public function greaterThan(string $field): self
-    {
-        $this->rules[] = "gt:{$field}";
-
-        return $this;
-    }
-
-    public function greaterThanOrEqual(string $field): self
-    {
-        $this->rules[] = "gte:{$field}";
-
-        return $this;
-    }
-
-    public function has(string $field): self
-    {
-        $this->rules[] = "has:{$field}";
-
-        return $this;
-    }
-
     public function image(): self
     {
         $this->rules[] = 'image';
@@ -235,6 +214,16 @@ trait HasSimpleRule
         return $this;
     }
 
+    public function regexYearRange(): self
+    {
+        $this->rules[] = 'regex:/^\d{4}-\d{4}$/';
+
+        return $this;
+    }
+
+    /**
+     * It will add a string
+     */
     public function string(): self
     {
         $this->rules[] = 'string';
@@ -301,6 +290,14 @@ trait HasSimpleRule
     public function uuid(): self
     {
         $this->rules[] = 'uuid';
+
+        return $this;
+    }
+
+    // /
+    public function currentYear(): self
+    {
+        $this->rules[] = 'max:'.(date('Y') + 1);
 
         return $this;
     }
