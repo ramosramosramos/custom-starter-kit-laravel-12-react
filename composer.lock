@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67b570c9d9e84ef772343fe7c761dcc1",
+    "content-hash": "e9dc37a8038f17379b345a7be1b5d5d4",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2083,27 +2083,33 @@
         },
         {
             "name": "kentjerone/laravel-chain-rule",
-            "version": "v1.0.0",
+            "version": "v1.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ramosramosramos/laravel-chain-rule.git",
-                "reference": "a7eb65c1613ec779e39d63e8779111c525fa9ee0"
+                "reference": "5c75e166fd8bfa2830e4ff6befe136ff2aa1a242"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ramosramosramos/laravel-chain-rule/zipball/a7eb65c1613ec779e39d63e8779111c525fa9ee0",
-                "reference": "a7eb65c1613ec779e39d63e8779111c525fa9ee0",
+                "url": "https://api.github.com/repos/ramosramosramos/laravel-chain-rule/zipball/5c75e166fd8bfa2830e4ff6befe136ff2aa1a242",
+                "reference": "5c75e166fd8bfa2830e4ff6befe136ff2aa1a242",
                 "shasum": ""
             },
             "require": {
-                "illuminate/support": "^10.0 || ^11.0 || ^12.0",
+                "illuminate/support": "^12.0",
                 "php": "^8.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "10"
+                "laravel/pint": "^1.16",
+                "orchestra/testbench": "^10.0",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^11.0"
             },
             "type": "library",
             "autoload": {
+                "files": [
+                    "src/Helpers/chain_rule_helper.php"
+                ],
                 "psr-4": {
                     "KentJerone\\ChainRule\\": "src/"
                 }
@@ -2118,12 +2124,22 @@
                     "email": "ramosramosramosramos12@gmail.com"
                 }
             ],
-            "description": "A chainable rule builder for laravel validation.",
+            "description": "A chainable rule builder for Laravel validation.",
+            "keywords": [
+                "builder",
+                "chainable",
+                "fluent",
+                "form-request",
+                "laravel",
+                "rules",
+                "validation"
+            ],
             "support": {
+                "docs": "https://github.com/ramosramosramos/laravel-chain-rule#readme",
                 "issues": "https://github.com/ramosramosramos/laravel-chain-rule/issues",
-                "source": "https://github.com/ramosramosramos/laravel-chain-rule/tree/v1.0.0"
+                "source": "https://github.com/ramosramosramos/laravel-chain-rule"
             },
-            "time": "2025-09-22T05:58:31+00:00"
+            "time": "2025-09-26T08:10:10+00:00"
         },
         {
             "name": "laravel/framework",

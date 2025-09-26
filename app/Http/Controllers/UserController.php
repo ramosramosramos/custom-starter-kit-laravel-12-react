@@ -7,23 +7,22 @@ namespace App\Http\Controllers;
 use App\Enum\PermissionEnum;
 use App\Enum\RoleEnum;
 use App\Http\Resources\User\UserResource;
-use App\Http\Rules\UserRule;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Inertia\Response;
-use Inertia\ResponseFactory;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
     /**
-     * @return \Inertia\Response|\Inertia\ResponseFactory
+     * @return Response
      */
-    public function index(): Response|ResponseFactory
+    public function index(): Response
     {
         $this->authorize(PermissionEnum::USER_VIEW->value);
 
@@ -33,9 +32,9 @@ class UserController extends Controller
     }
 
     /**
-     * @return \Inertia\Response|\Inertia\ResponseFactory
+     * @return Response
      */
-    public function create(): Response|ResponseFactory
+    public function create(): Response
     {
         $this->authorize(PermissionEnum::USER_CREATE->value);
 
@@ -46,7 +45,7 @@ class UserController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {
@@ -55,14 +54,12 @@ class UserController extends Controller
          * @var array<string[]> $validated
          */
         $validated = $request->validate([
-            'name' => UserRule::name(),
-            'email' => UserRule::uniqueEmail(),
-            'role' => ['required', 'string'],
+            'name' => cr()->required()->string()->max(255),
+            'email' => cr()->required()->email()->merge([Rule::unique(User::class, 'email')]),
+            'role' => cr()->required()->string(),
         ]);
 
-        /**
-         * @var User $user
-         */
+
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -73,11 +70,10 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
-
     /**
-     * @return \Inertia\Response|\Inertia\ResponseFactory
+     * @return Response
      */
-    public function edit(User $user): Response|ResponseFactory
+    public function edit(User $user): Response
     {
         $this->authorize(PermissionEnum::USER_UPDATE->value);
 
@@ -89,7 +85,7 @@ class UserController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(Request $request, User $user): RedirectResponse
     {
@@ -98,9 +94,9 @@ class UserController extends Controller
          * @var array<string,string[]> $validated
          */
         $validated = $request->validate([
-            'name' => UserRule::name(),
-            'email' => UserRule::email(),
-            'role' => ['required', 'string'],
+            'name' => cr()->required()->string()->max(255),
+            'email' => cr()->required()->email()->merge([Rule::unique(User::class, 'email')->ignore($user->id)]),
+            'role' => cr()->required()->string(),
         ]);
         $user->update([
             'name' => $validated['name'],
@@ -117,7 +113,7 @@ class UserController extends Controller
     /**
      * @return Response
      */
-    public function editPermission(User $user): Response|ResponseFactory
+    public function editPermission(User $user): Response
     {
         $this->authorize(PermissionEnum::USER_UPDATE->value);
 
@@ -146,7 +142,7 @@ class UserController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function destroy(User $user): RedirectResponse
     {
