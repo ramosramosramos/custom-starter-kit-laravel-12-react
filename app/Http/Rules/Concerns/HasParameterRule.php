@@ -460,11 +460,9 @@ trait HasParameterRule
     protected function shouldSkipFile($file): bool
     {
         // if developer forgot nullable but still using skip method
-        if (! in_array('nullable', $this->rules, true)) {
-            throw new LogicException(
-                'You must call ->nullable() before using ->skipImageIfEmpty().'
-            );
-        }
+        throw_unless(in_array('nullable', $this->rules, true), new LogicException(
+            'You must call ->nullable() before using ->skipImageIfEmpty().'
+        ));
 
         return empty($file);
     }

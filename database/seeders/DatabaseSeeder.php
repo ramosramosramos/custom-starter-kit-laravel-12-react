@@ -27,7 +27,7 @@ final class DatabaseSeeder extends Seeder
 
     public function createUsers(): void
     {
-        $user = User::firstOrCreate(
+        User::firstOrCreate(
             [
                 'email' => 'kentjeroneramos@gmail.com',
             ],
@@ -86,7 +86,7 @@ final class DatabaseSeeder extends Seeder
         $admin_user->syncPermissions(
             array_filter(
                 PermissionEnum::cases(),
-                fn (PermissionEnum $permission) => ! str_contains($permission->value, 'delete')
+                fn (PermissionEnum $permission): bool => ! str_contains($permission->value, 'delete')
             )
         );
 

@@ -32,12 +32,10 @@ final class UserResource extends JsonResource
             'name' => $user->name,
             'email' => $user->email,
             'role' => $role,
-            'permissions' => collect($user->permissions)->map(function (Permission $permission) {
-                return [
-                    'id' => $permission->id,
-                    'name' => $permission->name,
-                ];
-            }),
+            'permissions' => collect($user->permissions)->map(fn (Permission $permission): array => [
+                'id' => $permission->id,
+                'name' => $permission->name,
+            ]),
             'can_be' => [
                 'updated' => $role !== RoleEnum::SUPER_ADMIN->value,
                 'deleted' => $role !== RoleEnum::SUPER_ADMIN->value,

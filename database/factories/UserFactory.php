@@ -17,7 +17,7 @@ final class UserFactory extends Factory
     /**
      * The current password being used by the factory.
      */
-    protected static ?string $password;
+    private static ?string $password = null;
 
     /**
      * Define the model's default state.
@@ -40,14 +40,14 @@ final class UserFactory extends Factory
      */
     public function unverified(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'email_verified_at' => null,
         ]);
     }
 
     public function configure(): static
     {
-        return $this->afterCreating(function (User $user) {
+        return $this->afterCreating(function (User $user): void {
             $user->syncRoles('user');
         });
     }

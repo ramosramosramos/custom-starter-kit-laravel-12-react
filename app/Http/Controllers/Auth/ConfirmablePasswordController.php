@@ -29,16 +29,12 @@ final class ConfirmablePasswordController extends Controller
     {
         /** @var \App\Models\User $user */
         $user = $request->user();
-        if (
-            ! Auth::guard('web')->validate([
-                'email' => $user->email,
-                'password' => $request->password,
-            ])
-        ) {
-            throw ValidationException::withMessages([
-                'password' => __('auth.password'),
-            ]);
-        }
+        throw_unless(Auth::guard('web')->validate([
+            'email' => $user->email,
+            'password' => $request->password,
+        ]), ValidationException::withMessages([
+            'password' => __('auth.password'),
+        ]));
 
         $request->session()->put('auth.password_confirmed_at', time());
 

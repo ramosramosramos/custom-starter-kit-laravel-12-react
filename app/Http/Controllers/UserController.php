@@ -122,9 +122,7 @@ final class UserController extends Controller
 
     public function destroy(User $user): RedirectResponse
     {
-        if ($user->hasRole(RoleEnum::SUPER_ADMIN->value)) {
-            abort(404);
-        }
+        abort_if($user->hasRole(RoleEnum::SUPER_ADMIN->value), 404);
         $this->authorize(PermissionEnum::USER_DELETE->value);
         $user->delete();
 

@@ -22,15 +22,13 @@ final class BackupController extends Controller
         $files = Storage::disk('backups')->files(config('app.name', 'Laravel'));
 
         // Return mapped backup info
-        $backups = collect($files)->map(function ($file): array {
-            return [
-                'path' => $file,
-                // @phpstan-ignore-next-line
-                'size' => $this->formatBytes(Storage::disk('backups')->size($file)),
-                // @phpstan-ignore-next-line
-                'generated_at' => date('Y-m-d H:i:s', Storage::disk('backups')->lastModified($file)),
-            ];
-        });
+        $backups = collect($files)->map(fn ($file): array => [
+            'path' => $file,
+            // @phpstan-ignore-next-line
+            'size' => $this->formatBytes(Storage::disk('backups')->size($file)),
+            // @phpstan-ignore-next-line
+            'generated_at' => date('Y-m-d H:i:s', Storage::disk('backups')->lastModified($file)),
+        ]);
 
         return inertia('backup/index', [
             'backups' => $backups,
@@ -68,16 +66,14 @@ final class BackupController extends Controller
         // @phpstan-ignore-next-line
         $path = config('app.name').'/'.$request->string('path');
 
-        if (! $disk->exists($path)) {
-            abort(404, 'Backup file not found.');
-        }
+        abort_unless($disk->exists($path), 404, 'Backup file not found.');
 
         // @phpstan-ignore-next-line
         return response()->download($disk->path($path), $request->string('path'));
 
     }
 
-    protected function formatBytes(int $bytes, int $precision = 2): string
+    private function formatBytes(int $bytes, int $precision = 2): string
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB'];
 
@@ -85,7 +81,7 @@ final class BackupController extends Controller
         $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
         $pow = min($pow, count($units) - 1);
 
-        $bytes /= pow(1024, $pow);
+        $bytes /= 1024 ** $pow;
 
         return round($bytes, $precision).' '.$units[$pow];
     }

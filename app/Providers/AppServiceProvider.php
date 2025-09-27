@@ -30,10 +30,8 @@ final class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        collect(PermissionEnum::cases())->each(function ($permission) {
-            Gate::define($permission->value, function (User $user) use ($permission) {
-                return $user->hasPermissionTo($permission->value) ? Response::allow() : Response::denyAsNotFound();
-            });
+        collect(PermissionEnum::cases())->each(function ($permission): void {
+            Gate::define($permission->value, fn (User $user) => $user->hasPermissionTo($permission->value) ? Response::allow() : Response::denyAsNotFound());
         });
         $this->setupCommandsSafely();
         $this->tuneModelBehavior();
@@ -80,12 +78,8 @@ final class AppServiceProvider extends ServiceProvider
 
     private function logViewerRule(): void
     {
-        LogViewer::auth(function ($request): bool {
-            return true;
-        });
+        LogViewer::auth(fn ($request): bool => true);
 
-        Gate::define('viewLogViewer', function (?User $user): bool {
-            return true;
-        });
+        Gate::define('viewLogViewer', fn (?User $user): bool => true);
     }
 }

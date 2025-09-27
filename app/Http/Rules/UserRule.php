@@ -122,7 +122,7 @@ final class UserRule
      */
     public static function uniqueEmail(?User $user = null): array
     {
-        return ['required', 'string', 'lowercase', 'email', 'max:255', $user ? Rule::unique(User::class, 'email')->ignore($user->id) : Rule::unique(User::class, 'email')];
+        return ['required', 'string', 'lowercase', 'email', 'max:255', $user instanceof User ? Rule::unique(User::class, 'email')->ignore($user->id) : Rule::unique(User::class, 'email')];
     }
 
     /**

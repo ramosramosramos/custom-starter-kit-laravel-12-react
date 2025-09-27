@@ -1,61 +1,46 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 // odsl-C:\Users\User\Herd\custom-starter-kit-laravel-12-react\routes
-return \PHPStan\Cache\CacheItem::__set_state(array(
-   'variableKey' => 'v1',
-   'data' => 
-  array (
-    'C:\\Users\\User\\Herd\\custom-starter-kit-laravel-12-react\\routes\\auth.php' => 
-    array (
-      0 => 'da1ef7e3ed6c016cd714c43b3336b4e731ce9955',
-      1 => 
-      array (
-      ),
-      2 => 
-      array (
-      ),
-      3 => 
-      array (
-      ),
-    ),
-    'C:\\Users\\User\\Herd\\custom-starter-kit-laravel-12-react\\routes\\console.php' => 
-    array (
-      0 => '095d22dee22d536c8d0bdc3e13c3398a645611e3',
-      1 => 
-      array (
-      ),
-      2 => 
-      array (
-      ),
-      3 => 
-      array (
-      ),
-    ),
-    'C:\\Users\\User\\Herd\\custom-starter-kit-laravel-12-react\\routes\\settings.php' => 
-    array (
-      0 => '91ed9255ff504d27f7dd7fe35472ceec7a1ed780',
-      1 => 
-      array (
-      ),
-      2 => 
-      array (
-      ),
-      3 => 
-      array (
-      ),
-    ),
-    'C:\\Users\\User\\Herd\\custom-starter-kit-laravel-12-react\\routes\\web.php' => 
-    array (
-      0 => 'e1cc819d2331b25521c156aa6be1c6559afd3f05',
-      1 => 
-      array (
-      ),
-      2 => 
-      array (
-      ),
-      3 => 
-      array (
-      ),
-    ),
-  ),
-));
+return PHPStan\Cache\CacheItem::__set_state([
+    'variableKey' => 'v1',
+    'data' => [
+        'C:\\Users\\User\\Herd\\custom-starter-kit-laravel-12-react\\routes\\auth.php' => [
+            0 => '8a991f4514192e23c19e29f90894d8d25db406ae',
+            1 => [
+            ],
+            2 => [
+            ],
+            3 => [
+            ],
+        ],
+        'C:\\Users\\User\\Herd\\custom-starter-kit-laravel-12-react\\routes\\console.php' => [
+            0 => '07b77c6afc0aa7b564129fbb8de8f9d9f667cf50',
+            1 => [
+            ],
+            2 => [
+            ],
+            3 => [
+            ],
+        ],
+        'C:\\Users\\User\\Herd\\custom-starter-kit-laravel-12-react\\routes\\settings.php' => [
+            0 => '0adb9fae5c9312e41e282fcc8c97f58bbdf76e32',
+            1 => [
+            ],
+            2 => [
+            ],
+            3 => [
+            ],
+        ],
+        'C:\\Users\\User\\Herd\\custom-starter-kit-laravel-12-react\\routes\\web.php' => [
+            0 => '047e19650ca6aacf434c669008c237fabfe79422',
+            1 => [
+            ],
+            2 => [
+            ],
+            3 => [
+            ],
+        ],
+    ],
+]);

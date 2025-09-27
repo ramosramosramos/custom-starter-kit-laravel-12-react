@@ -12,13 +12,11 @@ final class UpdateUserPasswordAction
 {
     use AsAction;
 
-    /**
-     * Summary of handle
-     */
+
     public function handle(User $user, string $password): void
     {
         $user->update([
-            'password' => Hash::make((string) $password),
+            'password' => Hash::make($password),
         ]);
     }
 }

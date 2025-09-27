@@ -57,7 +57,7 @@ final class NewPasswordController extends Controller
                 'password_confirmation' => $validated['password_confirmation'],
                 'token' => $validated['token'],
             ],
-            function (User $user) use ($validated) {
+            function (User $user) use ($validated): void {
                 $user->forceFill([
                     'password' => Hash::make($validated['password']),
                     'remember_token' => Str::random(60),

@@ -26,7 +26,7 @@ trait AuthUserTrait
                 $permissions = $user->getAllPermissions();
 
                 return $permissions->mapWithKeys(
-                    fn (Permission $permission) => [$permission->name => $permission->name]
+                    fn (Permission $permission): array => [$permission->name => $permission->name]
                 );
             }
         );
