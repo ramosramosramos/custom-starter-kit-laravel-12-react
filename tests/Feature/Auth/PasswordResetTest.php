@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature\Auth;
 
 use App\Models\User;
@@ -8,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
-class PasswordResetTest extends TestCase
+final class PasswordResetTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -30,7 +32,6 @@ class PasswordResetTest extends TestCase
         Notification::assertSentTo($user, ResetPassword::class);
     }
 
-
     public function test_reset_password_screen_can_be_rendered(): void
     {
         Notification::fake();
@@ -47,7 +48,7 @@ class PasswordResetTest extends TestCase
                 /** @var string $token */
                 $token = $notification->token;
 
-                $response = $this->get('/reset-password/' . $token);
+                $response = $this->get('/reset-password/'.$token);
                 $response->assertStatus(200);
 
                 return true;
@@ -84,5 +85,4 @@ class PasswordResetTest extends TestCase
             }
         );
     }
-
 }

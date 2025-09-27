@@ -1,17 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Feature;
 
-use Tests\TestCase;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
 
-class ArchitectureTest extends TestCase
+final class ArchitectureTest extends TestCase
 {
     use RefreshDatabase;
+
     protected Filesystem $fs;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
         $this->fs = new Filesystem();
@@ -25,14 +28,14 @@ class ArchitectureTest extends TestCase
         foreach ($files as $file) {
             $contents = $this->fs->get($file->getPathname());
 
-            if (!str_contains($contents, 'declare(strict_types=1);')) {
+            if (! str_contains($contents, 'declare(strict_types=1);')) {
                 $violations[] = $file->getRelativePathname();
             }
         }
 
         $this->assertEmpty(
             $violations,
-            'Missing strict_types declaration in: ' . implode(', ', $violations)
+            'Missing strict_types declaration in: '.implode(', ', $violations)
         );
     }
 
@@ -51,15 +54,14 @@ class ArchitectureTest extends TestCase
 
         $this->assertEmpty(
             $violations,
-            'Forbidden functions (dd/die/dump) found in: ' . implode(', ', $violations)
+            'Forbidden functions (dd/die/dump) found in: '.implode(', ', $violations)
         );
     }
-
 
     public function test_services_do_not_depend_on_controllers()
     {
         $serviceDir = app_path('Services');
-        if (!is_dir($serviceDir)) {
+        if (! is_dir($serviceDir)) {
             $this->markTestSkipped('No Services directory found.');
         }
 
@@ -75,9 +77,7 @@ class ArchitectureTest extends TestCase
 
         $this->assertEmpty(
             $violations,
-            'Services must not depend on controllers. Violations: ' . implode(', ', $violations)
+            'Services must not depend on controllers. Violations: '.implode(', ', $violations)
         );
     }
-
-
 }

@@ -7,7 +7,7 @@ namespace App\Http\Rules;
 use App\Http\Rules\Concerns\HasParameterRule;
 use App\Http\Rules\Concerns\HasSimpleRule;
 
-class ChainRule
+final class ChainRule
 {
     use HasParameterRule;
     use HasSimpleRule;
@@ -30,9 +30,6 @@ class ChainRule
         return $this->rules;
     }
 
-    /**
-     * @return string
-     */
     public function toString(): string
     {
         return implode('|', $this->rules);
@@ -40,7 +37,6 @@ class ChainRule
 
     /**
      * @param  string[]  $rule
-     * @return ChainRule
      */
     public function merge(array $rule): self
     {

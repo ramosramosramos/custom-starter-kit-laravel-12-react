@@ -17,11 +17,8 @@ use Inertia\Response;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-class UserController extends Controller
+final class UserController extends Controller
 {
-    /**
-     * @return Response
-     */
     public function index(): Response
     {
         $this->authorize(PermissionEnum::USER_VIEW->value);
@@ -31,9 +28,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * @return Response
-     */
     public function create(): Response
     {
         $this->authorize(PermissionEnum::USER_CREATE->value);
@@ -44,9 +38,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * @return RedirectResponse
-     */
     public function store(Request $request): RedirectResponse
     {
         $this->authorize(PermissionEnum::USER_CREATE->value);
@@ -59,7 +50,6 @@ class UserController extends Controller
             'role' => cr()->required()->string(),
         ]);
 
-
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -70,9 +60,7 @@ class UserController extends Controller
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
-    /**
-     * @return Response
-     */
+
     public function edit(User $user): Response
     {
         $this->authorize(PermissionEnum::USER_UPDATE->value);
@@ -84,9 +72,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * @return RedirectResponse
-     */
     public function update(Request $request, User $user): RedirectResponse
     {
         $this->authorize(PermissionEnum::USER_UPDATE->value);
@@ -110,9 +95,6 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
-    /**
-     * @return Response
-     */
     public function editPermission(User $user): Response
     {
         $this->authorize(PermissionEnum::USER_UPDATE->value);
@@ -123,9 +105,6 @@ class UserController extends Controller
         ]);
     }
 
-    /**
-     * @return RedirectResponse
-     */
     public function updatePermission(Request $request, User $user): RedirectResponse
     {
         $this->authorize(PermissionEnum::USER_UPDATE->value);
@@ -141,9 +120,6 @@ class UserController extends Controller
         return redirect()->route('users.index')->with('success', 'User permissions updated successfully.');
     }
 
-    /**
-     * @return RedirectResponse
-     */
     public function destroy(User $user): RedirectResponse
     {
         if ($user->hasRole(RoleEnum::SUPER_ADMIN->value)) {

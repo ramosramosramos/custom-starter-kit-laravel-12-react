@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Rules;
 
-class CommonArrayRule
+final class CommonArrayRule
 {
     /**
      * The function shortNullableString() returns an array containing validation rules for a short

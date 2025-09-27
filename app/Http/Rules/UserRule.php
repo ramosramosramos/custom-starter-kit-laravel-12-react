@@ -7,7 +7,7 @@ namespace App\Http\Rules;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 
-class UserRule
+final class UserRule
 {
     /**
      * @return array<string>
@@ -118,7 +118,6 @@ class UserRule
     /**
      * Summary of uniqueEmail
      *
-     * @param  ?User  $user
      * @return array<\Illuminate\Validation\Rules\Unique|string>
      */
     public static function uniqueEmail(?User $user = null): array

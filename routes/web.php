@@ -1,9 +1,11 @@
 <?php
 
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
+declare(strict_types=1);
+
 use App\Http\Controllers\BackupController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('welcome');
@@ -20,10 +22,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('backups/download', [BackupController::class, 'download'])->name('backups.download');
 
     Route::resource('users', UserController::class)->except(['show']);
-    Route::get('users/{user}/edit-permission', [UserController::class,'editPermission'])->name('users.editPermission');
-    Route::put('users/{user}/update-permission', [UserController::class,'updatePermission'])->name('users.updatePermission');
+    Route::get('users/{user}/edit-permission', [UserController::class, 'editPermission'])->name('users.editPermission');
+    Route::put('users/{user}/update-permission', [UserController::class, 'updatePermission'])->name('users.updatePermission');
 
 });
 
-require __DIR__ . '/settings.php';
-require __DIR__ . '/auth.php';
+require __DIR__.'/settings.php';
+require __DIR__.'/auth.php';

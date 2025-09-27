@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Rules\Concerns;
 
+use LogicException;
+
 trait HasParameterRule
 {
     /**
@@ -63,9 +65,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $format
-     */
     public function dateFormat(string $format): self
     {
         $this->rules[] = 'date_format:'.$format;
@@ -73,9 +72,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $date
-     */
     public function dateEquals(string $date): self
     {
         $this->rules[] = 'date_equals:'.$date;
@@ -83,10 +79,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  int  $min
-     * @param  int  $max
-     */
     public function decimal(int $min, int $max): self
     {
         $this->rules[] = 'decimal:'.$min.','.$max;
@@ -94,10 +86,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $otherField
-     * @param  string  $value
-     */
     public function declinedIf(string $otherField, string $value): self
     {
         $this->rules[] = 'declined_if:'.$otherField.','.$value;
@@ -105,9 +93,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $field
-     */
     public function different(string $field): self
     {
         $this->rules[] = 'different:'.$field;
@@ -115,9 +100,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  int  $value
-     */
     public function digits(int $value): self
     {
         $this->rules[] = 'digits:'.$value;
@@ -125,10 +107,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  int  $min
-     * @param  int  $max
-     */
     public function digitsBetween(int $min, int $max): self
     {
         $this->rules[] = 'digits_between:'.$min.','.$max;
@@ -136,9 +114,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $value
-     */
     public function doesntEndWith(string $value): self
     {
         $this->rules[] = 'doesnt_end_with:'.$value;
@@ -146,9 +121,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $value
-     */
     public function doesntStartWith(string $value): self
     {
         $this->rules[] = 'doesnt_start_with:'.$value;
@@ -180,9 +152,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $field
-     */
     public function has(string $field): self
     {
         $this->rules[] = "has:{$field}";
@@ -190,9 +159,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $otherField
-     */
     public function inArray(string $otherField): self
     {
         $this->rules[] = 'in_array:'.$otherField.'.*';
@@ -200,9 +166,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $field
-     */
     public function lessThan(string $field): self
     {
         $this->rules[] = 'lt:'.$field;
@@ -210,9 +173,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $field
-     */
     public function lessThanOrEqual(string $field): self
     {
         $this->rules[] = 'lte:'.$field;
@@ -309,10 +269,6 @@ trait HasParameterRule
         return $this;
     }
 
-    /**
-     * @param  string  $otherField
-     * @param  string  $value
-     */
     public function requiredIf(string $otherField, string $value): self
     {
         $this->rules[] = 'required_if:'.$otherField.','.$value;
@@ -498,15 +454,14 @@ trait HasParameterRule
 
     /**
      * @param  mixed  $file
-     * @return bool
      *
-     * @throws \LogicException
+     * @throws LogicException
      */
     protected function shouldSkipFile($file): bool
     {
         // if developer forgot nullable but still using skip method
         if (! in_array('nullable', $this->rules, true)) {
-            throw new \LogicException(
+            throw new LogicException(
                 'You must call ->nullable() before using ->skipImageIfEmpty().'
             );
         }

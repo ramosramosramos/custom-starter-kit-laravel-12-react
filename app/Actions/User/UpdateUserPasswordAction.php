@@ -8,16 +8,12 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Lorisleiva\Actions\Concerns\AsAction;
 
-class UpdateUserPasswordAction
+final class UpdateUserPasswordAction
 {
     use AsAction;
 
     /**
      * Summary of handle
-     *
-     * @param  \App\Models\User  $user
-     * @param  string  $password
-     * @return void
      */
     public function handle(User $user, string $password): void
     {

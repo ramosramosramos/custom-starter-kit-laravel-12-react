@@ -9,7 +9,7 @@ use Spatie\LaravelData\Attributes\Validation\Email;
 use Spatie\LaravelData\Attributes\Validation\Max;
 use Spatie\LaravelData\Data;
 
-class UserData extends Data
+final class UserData extends Data
 {
     public function __construct(
         #[Max(255)]

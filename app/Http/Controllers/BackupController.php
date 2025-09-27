@@ -12,11 +12,8 @@ use Illuminate\Support\Facades\Storage;
 use Inertia\Response;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
-class BackupController extends Controller
+final class BackupController extends Controller
 {
-    /**
-     * @return Response
-     */
     public function index(): Response
     {
         $this->authorize(PermissionEnum::BACKUP_VIEW->value);
@@ -40,9 +37,6 @@ class BackupController extends Controller
         ]);
     }
 
-    /**
-     * @return \Illuminate\Http\RedirectResponse
-     */
     public function generate(): RedirectResponse
     {
         $this->authorize(PermissionEnum::BACKUP_GENERATE->value);
@@ -51,9 +45,6 @@ class BackupController extends Controller
         return to_route('backups.index')->with('success', 'Generated started. Please wait for a second');
     }
 
-    /**
-     * @return RedirectResponse
-     */
     public function destroy(Request $request): RedirectResponse
     {
 
@@ -70,9 +61,6 @@ class BackupController extends Controller
         return to_route('backups.index')->with('success', 'Backup deleted successfully');
     }
 
-    /**
-     * @return BinaryFileResponse
-     */
     public function download(Request $request): BinaryFileResponse
     {
         $this->authorize(PermissionEnum::BACKUP_DOWNLOAD->value);
@@ -89,9 +77,6 @@ class BackupController extends Controller
 
     }
 
-    /**
-     * @return string
-     */
     protected function formatBytes(int $bytes, int $precision = 2): string
     {
         $units = ['B', 'KB', 'MB', 'GB', 'TB'];
