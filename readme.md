@@ -40,7 +40,9 @@ Additional tools and references:
 * **Laravel Actions** — [Introduction](https://www.laravelactions.com/)
 * **Spatie Laravel Permission** — [Installation](https://spatie.be/docs/laravel-permission/v6/installation-laravel)
 * **IDE Helper Generator for Laravel** — [Installation](https://github.com/barryvdh/laravel-ide-helper)
-* **Laravel Backup** — [Installation](https://github.com/spatie/laravel-backup)
+* **Laravel Backup** — [GitHub](https://github.com/spatie/laravel-backup)
+* **Rector** — [Installation](https://getrector.com/documentation/cache-in-ci)
+* **driftingly/rector-laravel** — [GitHub](https://github.com/driftingly/rector-laravel)
 * **Laravel Chain Rule Validation by Kent Jerone Ramos** — [Github](https://github.com/ramosramosramos/laravel-chain-rule)
 
 > **Tip:** You can adjust permissions in the `logViewerRule` method inside `AppServiceProvider`.
