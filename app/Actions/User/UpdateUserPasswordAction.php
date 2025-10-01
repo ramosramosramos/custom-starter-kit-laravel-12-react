@@ -12,7 +12,6 @@ final class UpdateUserPasswordAction
 {
     use AsAction;
 
-
     public function handle(User $user, string $password): void
     {
         $user->update([

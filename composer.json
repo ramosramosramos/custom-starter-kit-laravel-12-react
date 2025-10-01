@@ -84,13 +84,14 @@
             "@php artisan wayfinder:generate"
         ],
         "format": [
-            "rector",
             "vendor/bin/phpstan analyse",
             "vendor/bin/pint --parallel"
         ],
+        "rector": [
+            "rector"
+        ],
         "test:rector": [
-            "rector --dry-run",
-            "vendor/bin/pint --parallel --test"
+            "rector --dry-run"
         ]
     },
     "extra": {

@@ -41,22 +41,19 @@ final class UserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $this->authorize(PermissionEnum::USER_CREATE->value);
-        /**
-         * @var array<string[]> $validated
-         */
-        $validated = $request->validate([
+        $request->validate([
             'name' => cr()->required()->string()->max(255),
             'email' => cr()->required()->email()->merge([Rule::unique(User::class, 'email')]),
             'role' => cr()->required()->string(),
         ]);
 
         $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
+            'name' => $request->string('name'),
+            'email' => $request->string('email'),
             'password' => bcrypt(Str::random(50)),
         ]);
 
-        $user->syncRoles($validated['role']);
+        $user->syncRoles((string) $request->string('role'));
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
     }
@@ -75,22 +72,20 @@ final class UserController extends Controller
     public function update(Request $request, User $user): RedirectResponse
     {
         $this->authorize(PermissionEnum::USER_UPDATE->value);
-        /**
-         * @var array<string,string[]> $validated
-         */
-        $validated = $request->validate([
+
+        $request->validate([
             'name' => cr()->required()->string()->max(255),
             'email' => cr()->required()->email()->merge([Rule::unique(User::class, 'email')->ignore($user->id)]),
             'role' => cr()->required()->string(),
         ]);
         $user->update([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
+            'name' => $request->string('name'),
+            'email' => $request->string('email'),
         ]);
         $user->password = bcrypt(Str::random(50));
         $user->save();
 
-        $user->syncRoles($validated['role']);
+        $user->syncRoles((string) $request->string('role'));
 
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
@@ -108,14 +103,12 @@ final class UserController extends Controller
     public function updatePermission(Request $request, User $user): RedirectResponse
     {
         $this->authorize(PermissionEnum::USER_UPDATE->value);
-        /**
-         * @var array<string,string[]> $validated
-         */
-        $validated = $request->validate([
-            'permissions' => ['required', 'array'],
-            'permissions.*' => ['required', 'string', 'exists:permissions,name'],
+
+        $request->validate([
+            'permissions' => cr()->required()->array(),
+            'permissions.*' => cr()->required()->string()->merge(['exists:permissions,name']),
         ]);
-        $user->syncPermissions($validated['permissions']);
+        $user->syncPermissions($request->array('permissions'));
 
         return redirect()->route('users.index')->with('success', 'User permissions updated successfully.');
     }
@@ -126,6 +119,7 @@ final class UserController extends Controller
         $this->authorize(PermissionEnum::USER_DELETE->value);
         $user->delete();
         $this->resetPasswordConfirm();
+
         return redirect()->route('users.index')->with('success', value: 'User deleted successfully.');
     }
 }

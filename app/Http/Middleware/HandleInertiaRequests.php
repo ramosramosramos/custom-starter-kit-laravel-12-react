@@ -62,7 +62,7 @@ final class HandleInertiaRequests extends Middleware
                         'can' => $this->getCan($user),
                     ]
                     : null,
-                'password_has_confirmed' =>  $request->session()->get('auth.password_confirmed_at'),
+                'password_has_confirmed' => $request->session()->get('auth.password_confirmed_at'),
             ],
 
             'flash' => [

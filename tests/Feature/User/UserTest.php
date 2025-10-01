@@ -93,14 +93,14 @@ final class UserTest extends TestCase
         $user->givePermissionTo(PermissionEnum::USER_UPDATE->value);
 
         $response = $this->actingAs($user)->put(route('users.updatePermission', $user), [
-            'permissions' => collect(PermissionEnum::cases())->map(fn (PermissionEnum $q) => $q->value)->toArray(),
+            'permissions' => collect(PermissionEnum::cases())->map(fn(PermissionEnum $q) => $q->value)->toArray(),
         ]);
         $response->assertSessionHasNoErrors();
         $response->assertRedirect(route('users.index'));
         $response->assertStatus(302);
 
         $user->refresh();
-        assertTrue($user->hasAllPermissions(collect(PermissionEnum::cases())->map(fn (PermissionEnum $q) => $q->value)->toArray()));
+        assertTrue($user->hasAllPermissions(collect(PermissionEnum::cases())->map(fn(PermissionEnum $q) => $q->value)->toArray()));
 
     }
 
@@ -108,9 +108,13 @@ final class UserTest extends TestCase
     {
         $user = User::factory()->create();
         $user->givePermissionTo(PermissionEnum::USER_DELETE->value);
-
+        $confirmResponse = $this->actingAs($user)->post(route('password.confirm', [
+            'password' => 'password'
+        ]));
+        $confirmResponse->assertSessionHasNoErrors();
         $response = $this->actingAs($user)->delete(route('users.destroy', $user));
 
+        $response->assertSessionHasNoErrors();
         $response->assertStatus(302);
         $this->assertDatabaseMissing('users', [
             'id' => $user->id,
