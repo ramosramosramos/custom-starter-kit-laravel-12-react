@@ -125,7 +125,7 @@ final class UserController extends Controller
         abort_if($user->hasRole(RoleEnum::SUPER_ADMIN->value), 404);
         $this->authorize(PermissionEnum::USER_DELETE->value);
         $user->delete();
-
+        $this->resetPasswordConfirm();
         return redirect()->route('users.index')->with('success', value: 'User deleted successfully.');
     }
 }
