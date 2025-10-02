@@ -14,10 +14,8 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
 
     Route::get('backups', [BackupController::class, 'index'])->name('backups.index');
     Route::post('backups/generate', [BackupController::class, 'generate'])->name('backups.generate');
-    Route::middleware('password.confirm')->group(function (): void {
-        Route::delete('backups/destroy', [BackupController::class, 'destroy'])->name('backups.destroy');
-        Route::get('backups/download', [BackupController::class, 'download'])->name('backups.download');
-    });
+    Route::get('backups/download', [BackupController::class, 'download'])->name('backups.download');
+    Route::delete('backups/destroy', [BackupController::class, 'destroy'])->name('backups.destroy')->middleware('password.confirm');
 
     Route::resource('users', UserController::class)->except(['show'])
         ->middlewareFor(['destroy'], 'password.confirm');

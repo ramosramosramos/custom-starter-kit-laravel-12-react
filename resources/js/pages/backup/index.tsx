@@ -26,7 +26,6 @@ type Backup = {
 };
 
 export default function Index({ backups }: { backups: Backup[] }) {
-    usePoll(1000);
     const can = useCan();
     const handleGenerateBackup = () => {
         router.post(BackupController.generate());

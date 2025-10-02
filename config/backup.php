@@ -175,7 +175,7 @@ return [
          * When set to 'default', we'll use ZipArchive::EM_AES_256 if it is
          * available on your system.
          */
-        'encryption' => 'default',
+        'encryption' => ZipArchive::EM_AES_256,
 
         /*
          * The number of attempts, in case the backup command encounters an exception
