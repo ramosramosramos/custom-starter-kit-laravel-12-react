@@ -32,7 +32,7 @@ final class UserResource extends JsonResource
             'name' => $user->name,
             'email' => $user->email,
             'role' => $role,
-            'permissions' => collect($user->permissions)->map(fn (Permission $permission): array => [
+            'permissions' => collect($user->getAllPermissions())->map(fn (Permission $permission): array => [
                 'id' => $permission->id,
                 'name' => $permission->name,
             ]),

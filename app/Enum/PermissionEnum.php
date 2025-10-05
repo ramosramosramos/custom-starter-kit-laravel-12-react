@@ -25,4 +25,7 @@ enum PermissionEnum: string
     case PERMISSION_CREATE = 'permission_create';
     case PERMISSION_UPDATE = 'permission_update';
     case PERMISSION_DELETE = 'permission_delete';
+
+    case SYSTEM_LOG_VIEW = 'system_log_view';
+
 }

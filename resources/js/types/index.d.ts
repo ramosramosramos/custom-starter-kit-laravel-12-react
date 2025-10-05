@@ -24,6 +24,7 @@ export interface NavItem {
     show: string | undefined;
     type: 'parent' | 'normal';
     children?: NavItem[];
+    tag?: 'link' | 'a';
 }
 
 export interface SharedData {
@@ -82,4 +83,6 @@ export type Can = {
     permission_create: string;
     permission_update: string;
     permission_delete: string;
+
+    system_log_view: string;
 };

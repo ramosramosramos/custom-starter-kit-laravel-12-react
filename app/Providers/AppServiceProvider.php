@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Enum\PermissionEnum;
+use App\Enum\RoleEnum;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\URL;
@@ -82,8 +84,15 @@ final class AppServiceProvider extends ServiceProvider
 
     private function logViewerRule(): void
     {
-        LogViewer::auth(fn($request): bool => true);
 
-        Gate::define('viewLogViewer', fn(?User $user): bool => true);
+        LogViewer::auth(function (Request $request) {
+            /**
+             * @var User $user
+             */
+            $user = $request->user();
+            return $user->hasPermissionTo(PermissionEnum::SYSTEM_LOG_VIEW->value);
+        });
+
+        Gate::define('viewLogViewer', fn(?User $user): bool => $user->hasPermissionTo(PermissionEnum::SYSTEM_LOG_VIEW->value));
     }
 }

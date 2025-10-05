@@ -39,6 +39,15 @@ export function useMainNavItems(): NavItem[] {
                     isActive: current('backups.index'),
                     type: 'normal',
                 },
+                {
+                    title: 'System logs',
+                    href: '/log-viewer',
+                    icon: User,
+                    show: can?.system_log_view,
+                    isActive: false,
+                    type: 'normal',
+                    tag: 'a',
+                },
             ],
         },
     ];
