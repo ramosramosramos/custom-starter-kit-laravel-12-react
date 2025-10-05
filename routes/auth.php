@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\Auth\RoleConfirmablePasswordController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ConfirmablePasswordController;
 use App\Http\Controllers\Auth\EmailVerificationNotificationController;
@@ -52,6 +53,14 @@ Route::middleware('auth')->group(function (): void {
         ->name('password.confirm');
 
     Route::post('confirm-password', [ConfirmablePasswordController::class, 'store'])
+        ->middleware('throttle:6,1');
+
+    // role
+    Route::get('role-confirm-password', [RoleConfirmablePasswordController::class, 'show'])
+        ->name('role.password.confirm');
+
+    Route::post('role-confirm-password', [RoleConfirmablePasswordController::class, 'store'])
+        ->name('store.role.password.confirm')
         ->middleware('throttle:6,1');
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])

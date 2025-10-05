@@ -130,10 +130,29 @@ public function rules(): array
         'middle_name'     => UserRule::middleName(),
         'phone_number'    => UserRule::nullablePhoneNumber(),
         'email'           => [...UserRule::email(), 'exists:users,email'],
-        'username'        => UserRule::username(),
-        'turnstile_token' => CommonArrayRule::longRequiredString(),
+
+        //helper form laravel chain rule validation
+        // https://github.com/ramosramosramos/laravel-chain-rule
+        'username'        => cr()->required()->string()->min(6)->max(20),
+        'turnstile_token' => cr()->required()->string(),
     ];
 }
+```
+
+---
+## 🧩 Custom Role Password Confirm Middleware
+
+This starter kit includes a custom middleware `role.password.confirm` that you can use to protect routes based on the user's role.
+It uses Spatie's Laravel Permission package to check if the user has the required role.
+> **Note:** The middleware expects the role name as a parameter.
+
+You can use it like this:
+
+```php
+    Route::delete('backups/destroy', [BackupController::class, 'destroy'])->name('backups.destroy')
+    ->middleware('role.password.confirm:super_admin');
+    // or ->middleware('role.password.confirm:admin');
+    // or ->middleware('role.password.confirm:publisher');
 ```
 
 ---
