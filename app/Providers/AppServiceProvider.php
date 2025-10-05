@@ -31,7 +31,7 @@ final class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         collect(PermissionEnum::cases())->each(function ($permission): void {
-            Gate::define($permission->value, fn (User $user) => $user->hasPermissionTo($permission->value) ? Response::allow() : Response::denyAsNotFound());
+            Gate::define($permission->value, fn(User $user) => $user->hasPermissionTo($permission->value) ? Response::allow() : Response::denyAsNotFound());
         });
         $this->setupCommandsSafely();
         $this->tuneModelBehavior();
@@ -63,7 +63,7 @@ final class AppServiceProvider extends ServiceProvider
      */
     private function enforceSecureUrls(): void
     {
-        if (! $this->app->environment('local')) {
+        if (!$this->app->environment('local')) {
             URL::forceScheme('https');
         }
     }
@@ -73,13 +73,17 @@ final class AppServiceProvider extends ServiceProvider
      */
     private function optimizeViteSettings(): void
     {
-        Vite::usePrefetchStrategy('aggressive');
+        //for small apps, use aggressive strategy
+        // Vite::usePrefetchStrategy('aggressive');
+
+        //for large apps, use waterfall strategy
+        Vite::prefetch(concurrency: 5);
     }
 
     private function logViewerRule(): void
     {
-        LogViewer::auth(fn ($request): bool => true);
+        LogViewer::auth(fn($request): bool => true);
 
-        Gate::define('viewLogViewer', fn (?User $user): bool => true);
+        Gate::define('viewLogViewer', fn(?User $user): bool => true);
     }
 }
