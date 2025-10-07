@@ -2,25 +2,20 @@ import { Filter } from '..';
 import { Meta } from '../paginator-type';
 import { CanBe, Permission } from '../permission/permission-type';
 
-
-export type User = {
+export type Role = {
     id: number;
     name: string;
-    email: string;
-    role: string;
-    created_at: string;
-    updated_at: string;
-    can_be: CanBe;
+    created_at?: string;
+    updated_at?: string;
     permissions: Permission[];
+    can_be: CanBe;
 };
-export type UserProps = {
-    users: {
-        data: User[];
+export type RoleProps = {
+    roles: {
+        data: Role[];
         meta: Meta;
     };
     filter: Filter;
 };
-
-
 
 

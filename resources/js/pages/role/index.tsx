@@ -1,4 +1,4 @@
-import UserController from '@/actions/App/Http/Controllers/UserController';
+import RoleController from '@/actions/App/Http/Controllers/RoleController';
 import AddButton from '@/components/buttons/add-button';
 import DeleteButton from '@/components/buttons/delete-button';
 import EditButton from '@/components/buttons/edit-button';
@@ -10,30 +10,30 @@ import AppLayout from '@/layouts/app-layout';
 import { notifyToast } from '@/lib/hot-notification/notify-toast';
 import { type BreadcrumbItem } from '@/types';
 import { Permission } from '@/types/permission/permission-type';
-import { UserProps } from '@/types/user/user-type';
+import { RoleProps } from '@/types/role/role-type';
 import { Head, router } from '@inertiajs/react';
 import { useState } from 'react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
-        title: 'Users',
-        href: '/users',
+        title: 'Roles',
+        href: '/roles',
     },
 ];
 
-export default function Index({ users, filter }: UserProps) {
+export default function Index({ roles, filter }: RoleProps) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Users" />
+            <Head title="Roles" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="flex justify-end p-1">
-                    <AddButton onClick={() => router.visit(UserController.create())}>Create</AddButton>
+                    {/* <AddButton onClick={() => router.visit(RoleController.create())}>Create</AddButton> */}
                 </div>
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min md:p-5 dark:border-sidebar-border">
-                    {users.data.length > 0 && (
+                    {roles.data.length > 0 && (
                         <>
-                            <UserTable users={users} />
-                            <DefaultPaginator meta={users.meta} filter={filter} />
+                            <UserTable roles={roles} />
+                            <DefaultPaginator meta={roles.meta} filter={filter} />
                         </>
                     )}
                 </div>
@@ -42,11 +42,11 @@ export default function Index({ users, filter }: UserProps) {
     );
 }
 
-function UserTable({ users }: { users: UserProps['users'] }) {
+function UserTable({ roles }: { roles: RoleProps['roles'] }) {
     const can = useCan();
     return (
         <TableCompound>
-            <TableCompound.Caption>A list of the users.</TableCompound.Caption>
+            <TableCompound.Caption>A list of the roles.</TableCompound.Caption>
             <TableCompound.Header>
                 <TableCompound.Row>
                     <TableCompound.Head>ID</TableCompound.Head>
@@ -58,39 +58,38 @@ function UserTable({ users }: { users: UserProps['users'] }) {
                 </TableCompound.Row>
             </TableCompound.Header>
             <TableCompound.Body>
-                {users.data.map((user) => (
-                    <TableCompound.Row key={user.id}>
-                        <TableCompound.Cell>{user.id}</TableCompound.Cell>
-                        <TableCompound.Cell>{user.name}</TableCompound.Cell>
-                        <TableCompound.Cell>{user.email}</TableCompound.Cell>
-                        <TableCompound.Cell>{user.role}</TableCompound.Cell>
+                {roles.data.map((role) => (
+                    <TableCompound.Row key={role.id}>
+                        <TableCompound.Cell>{role.id}</TableCompound.Cell>
+                        <TableCompound.Cell>{role.name}</TableCompound.Cell>
+
                         <TableCompound.Cell>
-                            <PermissionsCell permissions={user.permissions} />
+                            <PermissionsCell permissions={role.permissions} />
                         </TableCompound.Cell>
 
                         <TableCompound.Cell className="flex w-[max-content] items-center gap-2">
-                            {user.can_be.updated && (
+                            {/* {role.can_be.updated && (
                                 <span>
-                                    {can?.user_update && (
-                                        <EditButton onClick={() => router.visit(UserController.editPermission(user.id))}>Edit Permissions</EditButton>
+                                    {can?.role_update && (
+                                        <EditButton onClick={() => router.visit(RoleController.editPermission(role.id))}>Edit Permissions</EditButton>
                                     )}
                                 </span>
                             )}
-                            {user.can_be.updated && (
+                            {role.can_be.updated && (
                                 <span>
-                                    {can?.user_update && (
-                                        <EditButton onClick={() => router.visit(UserController.edit(user.id))}>Edit Info</EditButton>
+                                    {can?.role_update && (
+                                        <EditButton onClick={() => router.visit(RoleController.edit(role.id))}>Edit Info</EditButton>
                                     )}
                                 </span>
-                            )}
-                            {user.can_be.deleted && (
+                            )} */}
+                            {role.can_be.deleted && (
                                 <span>
-                                    {can?.user_delete && (
+                                    {can?.role_delete && (
                                         <ConfirmInputDialog
-                                            title="Deleting user"
-                                            reference={user.name.trim()}
+                                            title="Deleting role"
+                                            reference={role.name.trim()}
                                             onConfirm={() => {
-                                                router.delete(UserController.destroy(user.id), {
+                                                router.delete(RoleController.destroy(role.id), {
                                                     preserveScroll: true,
                                                     onError: () => {
                                                         notifyToast.error('Failed to delete');

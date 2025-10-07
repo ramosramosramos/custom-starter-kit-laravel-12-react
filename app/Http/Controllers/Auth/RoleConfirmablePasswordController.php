@@ -1,19 +1,20 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
+use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 use Inertia\Response;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Spatie\Permission\Models\Role;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Http\RedirectResponse;
 
-class RoleConfirmablePasswordController extends Controller
+final class RoleConfirmablePasswordController extends Controller
 {
     /**
      * Show the confirm password page.
@@ -43,7 +44,6 @@ class RoleConfirmablePasswordController extends Controller
             $query->where('name', $roleName);
         })->get(); // handle null role safely
 
-
         if ($users->isEmpty()) {
             return back()->withErrors(['role' => 'Credentials do not match.']);
         }
@@ -57,12 +57,12 @@ class RoleConfirmablePasswordController extends Controller
             }
         }
 
-        if (!$matchFound) {
+        if (! $matchFound) {
             return back()->withErrors(['password' => 'Credentials do not match.']);
         }
 
         // 3️⃣ Store session marker
-        $request->session()->put('auth.' . $roleName . '_password_confirmed_at', time());
+        $request->session()->put('auth.'.$roleName.'_password_confirmed_at', time());
 
         return redirect()->intended(route('dashboard', absolute: false));
     }

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Enum\PermissionEnum;
-use App\Enum\RoleEnum;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Database\Eloquent\Model;
@@ -33,7 +32,7 @@ final class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         collect(PermissionEnum::cases())->each(function ($permission): void {
-            Gate::define($permission->value, fn(User $user) => $user->hasPermissionTo($permission->value) ? Response::allow() : Response::denyAsNotFound());
+            Gate::define($permission->value, fn (User $user) => $user->hasPermissionTo($permission->value) ? Response::allow() : Response::denyAsNotFound());
         });
         $this->setupCommandsSafely();
         $this->tuneModelBehavior();
@@ -65,7 +64,7 @@ final class AppServiceProvider extends ServiceProvider
      */
     private function enforceSecureUrls(): void
     {
-        if (!$this->app->environment('local')) {
+        if (! $this->app->environment('local')) {
             URL::forceScheme('https');
         }
     }
@@ -75,10 +74,10 @@ final class AppServiceProvider extends ServiceProvider
      */
     private function optimizeViteSettings(): void
     {
-        //for small apps, use aggressive strategy
+        // for small apps, use aggressive strategy
         // Vite::usePrefetchStrategy('aggressive');
 
-        //for large apps, use waterfall strategy
+        // for large apps, use waterfall strategy
         Vite::prefetch(concurrency: 5);
     }
 
@@ -90,9 +89,10 @@ final class AppServiceProvider extends ServiceProvider
              * @var User $user
              */
             $user = $request->user();
+
             return $user->hasPermissionTo(PermissionEnum::SYSTEM_LOG_VIEW->value);
         });
 
-        Gate::define('viewLogViewer', fn(?User $user): bool => $user->hasPermissionTo(PermissionEnum::SYSTEM_LOG_VIEW->value));
+        Gate::define('viewLogViewer', fn (?User $user): bool => $user ? $user->hasPermissionTo(PermissionEnum::SYSTEM_LOG_VIEW->value) : false);
     }
 }

@@ -1,43 +1,44 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware\Auth;
 
 use Closure;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Contracts\Routing\ResponseFactory;
 use Illuminate\Contracts\Routing\UrlGenerator;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
+use Symfony\Component\HttpFoundation\Response;
 
-class RequiredRolePasswordMiddleware
+final class RequiredRolePasswordMiddleware
 {
     /**
      * The response factory instance.
      *
-     * @var \Illuminate\Contracts\Routing\ResponseFactory
+     * @var ResponseFactory
      */
-    protected $responseFactory;
+    private $responseFactory;
 
     /**
      * The URL generator instance.
      *
-     * @var \Illuminate\Contracts\Routing\UrlGenerator
+     * @var UrlGenerator
      */
-    protected $urlGenerator;
+    private $urlGenerator;
 
     /**
      * The password timeout.
      *
      * @var int
      */
-    protected $passwordTimeout;
+    private $passwordTimeout;
 
     /**
      * Create a new middleware instance.
      *
-     * @param  \Illuminate\Contracts\Routing\ResponseFactory  $responseFactory
-     * @param  \Illuminate\Contracts\Routing\UrlGenerator  $urlGenerator
+     * @param  ResponseFactory  $responseFactory
+     * @param  UrlGenerator  $urlGenerator
      * @param  int|null  $passwordTimeout
      */
     public function __construct(ResponseFactory $responseFactory, UrlGenerator $urlGenerator, $passwordTimeout = null)
@@ -58,14 +59,14 @@ class RequiredRolePasswordMiddleware
      */
     public static function using($redirectToRoute = null, $passwordTimeoutSeconds = null)
     {
-        return static::class . ':' . implode(',', func_get_args());
+        return self::class.':'.implode(',', func_get_args());
     }
 
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param  Request  $request
+     * @param  Closure  $next
      * @param  string|null  $redirectToRoute
      * @param  string|int|null  $passwordTimeoutSeconds
      * @return mixed
@@ -75,13 +76,13 @@ class RequiredRolePasswordMiddleware
         if ($this->shouldConfirmPassword($request, $passwordTimeoutSeconds, $role)) {
             if ($request->expectsJson()) {
                 return $this->responseFactory->json([
-                    'message' => ucfirst($role) . ' password confirmation required.',
+                    'message' => ucfirst($role).' password confirmation required.',
                 ], 423);
             }
 
             return $this->responseFactory->redirectGuest(
                 $this->urlGenerator->route($redirectToRoute ?: 'role.password.confirm', [
-                    'role' => $role
+                    'role' => $role,
                 ]),
 
             );
@@ -93,13 +94,14 @@ class RequiredRolePasswordMiddleware
     /**
      * Determine if the confirmation timeout has expired.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int|null  $passwordTimeoutSeconds
+     * @param  Request  $request
+     * @param  string|int|null  $passwordTimeoutSeconds
      * @return bool
      */
-    protected function shouldConfirmPassword($request, $passwordTimeoutSeconds = null, string $role = "admin"): bool
+    private function shouldConfirmPassword($request, $passwordTimeoutSeconds = null, string $role = 'admin'): bool
     {
-        $confirmedAt = Date::now()->unix() - $request->session()->get('auth.' . $role . '_password_confirmed_at', 0);
+        // @phpstan-ignore-next-line
+        $confirmedAt = Date::now()->unix() - $request->session()->get('auth.'.$role.'_password_confirmed_at', 0);
 
         return $confirmedAt > ($passwordTimeoutSeconds ?? $this->passwordTimeout);
     }

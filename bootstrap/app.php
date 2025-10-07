@@ -19,7 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
 
         $middleware->alias([
-            'role.password.confirm'=>RequiredRolePasswordMiddleware::class,
+            'role.password.confirm' => RequiredRolePasswordMiddleware::class,
         ]);
         $middleware->encryptCookies(except: ['appearance', 'sidebar_state']);
 

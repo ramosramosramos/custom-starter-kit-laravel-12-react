@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Permission\UpdatePermissionAction;
 use App\Enum\PermissionEnum;
 use App\Enum\RoleEnum;
 use App\Http\Resources\User\UserResource;
@@ -108,7 +109,8 @@ final class UserController extends Controller
             'permissions' => cr()->required()->array(),
             'permissions.*' => cr()->required()->string()->merge(['exists:permissions,name']),
         ]);
-        $user->syncPermissions($request->array('permissions'));
+
+        UpdatePermissionAction::run($user, $request->array('permissions'));
 
         return redirect()->route('users.index')->with('success', 'User permissions updated successfully.');
     }
