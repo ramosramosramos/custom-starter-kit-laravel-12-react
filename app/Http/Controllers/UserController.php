@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Request as HttpRequest;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Inertia\Response;
@@ -20,12 +21,16 @@ use Spatie\Permission\Models\Role;
 
 final class UserController extends Controller
 {
-    public function index(): Response
+    public function index(HttpRequest $request): Response
     {
         $this->authorize(PermissionEnum::USER_VIEW->value);
-
+        $request->validate(['search' => cr()->nullable()->string()->sanitizeXss()]);
+        $search = (string) $request->string('search', null);
         return inertia('user/index', [
-            'users' => UserResource::collection(app(UserService::class)->getUsers()),
+            'users' => UserResource::collection(app(UserService::class)->getUsers($search)),
+            'filter' => [
+                'search' => $search,
+            ]
         ]);
     }
 

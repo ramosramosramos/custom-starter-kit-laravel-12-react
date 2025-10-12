@@ -4,6 +4,8 @@ import DeleteButton from '@/components/buttons/delete-button';
 import EditButton from '@/components/buttons/edit-button';
 import TableCompound from '@/components/compounds/table-compound';
 import ConfirmInputDialog from '@/components/dialogs/confirm-input-dialog';
+import NoSearchFound from '@/components/fallbacks/no-search-found';
+import SearchFilter from '@/components/inputs/search-filter';
 import DefaultPaginator from '@/components/paginators/default-paginator';
 import { useCan } from '@/hooks/use-can';
 import AppLayout from '@/layouts/app-layout';
@@ -29,12 +31,18 @@ export default function Index({ users, filter }: UserProps) {
                 <div className="flex justify-end p-1">
                     <AddButton onClick={() => router.visit(UserController.create())}>Create</AddButton>
                 </div>
+                <div className="flex justify-start p-1">
+                    <SearchFilter url={UserController.index().url} filter={filter} searchLimit={false} />
+                </div>
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min md:p-5 dark:border-sidebar-border">
                     {users.data.length > 0 && (
                         <>
                             <UserTable users={users} />
                             <DefaultPaginator meta={users.meta} filter={filter} />
                         </>
+                    )}
+                    {users.data.length === 0 && (
+                        <NoSearchFound title={filter.search} />
                     )}
                 </div>
             </div>

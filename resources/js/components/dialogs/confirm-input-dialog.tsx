@@ -4,6 +4,7 @@ import { ComponentProps, useState } from 'react';
 import { DialogCompound } from '../compounds/dialog-compound';
 import InputGroup from '../inputs/input-group';
 import { Button } from '../ui/button';
+import { cn } from '@/lib/utils';
 
 export default function ConfirmInputDialog({
     title,
@@ -11,11 +12,13 @@ export default function ConfirmInputDialog({
     onConfirm,
     reference,
     children,
+    triggerClassName,
     ...props
 }: ComponentProps<typeof DialogCompound> & {
     title?: string;
     description?: string;
     reference: string;
+    triggerClassName?: ComponentProps<typeof DialogCompound.Trigger>['className'];
     onConfirm: (isSame: boolean) => void;
 }) {
     const [open, setOpen] = useState<boolean>(false);
@@ -41,7 +44,7 @@ export default function ConfirmInputDialog({
     }
     return (
         <DialogCompound open={open} onOpenChange={() => setOpen(!open)} {...props}>
-            <DialogCompound.Trigger asChild>{children}</DialogCompound.Trigger>
+            <DialogCompound.Trigger className={cn('bg-red-500 hover:bg-red-400', triggerClassName)} asChild >{children}</DialogCompound.Trigger>
             <DialogCompound.Content className="sm:max-w-md">
                 <DialogCompound.Header>
                     <DialogCompound.Title className="capitalize"> {title}</DialogCompound.Title>
