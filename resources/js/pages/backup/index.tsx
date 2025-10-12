@@ -10,7 +10,7 @@ import { useCan } from '@/hooks/use-can';
 
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
-import { Head, router, usePoll } from '@inertiajs/react';
+import { Head, router } from '@inertiajs/react';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {

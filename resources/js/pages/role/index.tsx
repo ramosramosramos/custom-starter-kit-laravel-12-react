@@ -1,5 +1,4 @@
 import RoleController from '@/actions/App/Http/Controllers/RoleController';
-import AddButton from '@/components/buttons/add-button';
 import DeleteButton from '@/components/buttons/delete-button';
 import EditButton from '@/components/buttons/edit-button';
 import TableCompound from '@/components/compounds/table-compound';
@@ -32,7 +31,7 @@ export default function Index({ roles, filter }: RoleProps) {
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min md:p-5 dark:border-sidebar-border">
                     {roles.data.length > 0 && (
                         <>
-                            <UserTable roles={roles} />
+                            <RoleTable roles={roles} />
                             <DefaultPaginator meta={roles.meta} filter={filter} />
                         </>
                     )}
@@ -42,7 +41,7 @@ export default function Index({ roles, filter }: RoleProps) {
     );
 }
 
-function UserTable({ roles }: { roles: RoleProps['roles'] }) {
+function RoleTable({ roles }: { roles: RoleProps['roles'] }) {
     const can = useCan();
     return (
         <TableCompound>
@@ -51,9 +50,8 @@ function UserTable({ roles }: { roles: RoleProps['roles'] }) {
                 <TableCompound.Row>
                     <TableCompound.Head>ID</TableCompound.Head>
                     <TableCompound.Head>Name</TableCompound.Head>
-                    <TableCompound.Head>Email</TableCompound.Head>
-                    <TableCompound.Head>Role</TableCompound.Head>
                     <TableCompound.Head>Permissions</TableCompound.Head>
+                    <TableCompound.Head>Created</TableCompound.Head>
                     <TableCompound.Head>Actions</TableCompound.Head>
                 </TableCompound.Row>
             </TableCompound.Header>
@@ -61,27 +59,22 @@ function UserTable({ roles }: { roles: RoleProps['roles'] }) {
                 {roles.data.map((role) => (
                     <TableCompound.Row key={role.id}>
                         <TableCompound.Cell>{role.id}</TableCompound.Cell>
-                        <TableCompound.Cell>{role.name}</TableCompound.Cell>
+                        <TableCompound.Cell>{role.name.replaceAll('_', ' ')}</TableCompound.Cell>
+                        <TableCompound.Cell>{role.created_at}</TableCompound.Cell>
 
                         <TableCompound.Cell>
                             <PermissionsCell permissions={role.permissions} />
                         </TableCompound.Cell>
 
                         <TableCompound.Cell className="flex w-[max-content] items-center gap-2">
-                            {/* {role.can_be.updated && (
-                                <span>
-                                    {can?.role_update && (
-                                        <EditButton onClick={() => router.visit(RoleController.editPermission(role.id))}>Edit Permissions</EditButton>
-                                    )}
-                                </span>
-                            )}
+
                             {role.can_be.updated && (
                                 <span>
                                     {can?.role_update && (
-                                        <EditButton onClick={() => router.visit(RoleController.edit(role.id))}>Edit Info</EditButton>
+                                        <EditButton onClick={() => router.visit(RoleController.editPermission(role.id))}>Edit permissions</EditButton>
                                     )}
                                 </span>
-                            )} */}
+                            )}
                             {role.can_be.deleted && (
                                 <span>
                                     {can?.role_delete && (

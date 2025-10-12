@@ -1,4 +1,4 @@
-import UserController from '@/actions/App/Http/Controllers/UserController';
+import RoleController from '@/actions/App/Http/Controllers/RoleController';
 import { TypographyH2, TypographyH4 } from '@/components/typography/shadcn-typography';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -6,35 +6,35 @@ import { Input } from '@/components/ui/input';
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Permission } from '@/types/permission/permission-type';
-import {User } from '@/types/user/user-type';
+import {Role } from '@/types/role/role-type';
 
 import { Head, useForm } from '@inertiajs/react';
 import { useState } from 'react';
 
-const breadcrumbs: BreadcrumbItem[] = [{ title: 'Edit User Permissions', href: '' }];
+const breadcrumbs: BreadcrumbItem[] = [{ title: 'Edit Role Permissions', href: '' }];
 
 type PermissionFormType = {
     permissions: string[]; // store names only
 };
 
-export default function Edit({ user, permissions }: { user: User; permissions: Permission[] }) {
+export default function Edit({ role, permissions }: { role: Role; permissions: Permission[] }) {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Edit User" />
+            <Head title="Edit Role" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 p-2 md:min-h-min md:p-5 dark:border-sidebar-border">
-                    <TypographyH2 className="mb-5">{user.name}</TypographyH2>
-                    <TypographyH4 className="mb-5">User Permissions</TypographyH4>
-                    <PermissionForm user={user} permissions={permissions} />
+                    <TypographyH2 className="mb-5">{role.name}</TypographyH2>
+                    <TypographyH4 className="mb-5">Role Permissions</TypographyH4>
+                    <PermissionForm role={role} permissions={permissions} />
                 </div>
             </div>
         </AppLayout>
     );
 }
 
-export function PermissionForm({ user, permissions }: { user: User; permissions: Permission[] }) {
+export function PermissionForm({ role, permissions }: { role: Role; permissions: Permission[] }) {
     const { data, setData, put, processing } = useForm<PermissionFormType>({
-        permissions: user.permissions.map((p) => p.name),
+        permissions: role.permissions.map((p) => p.name),
     });
 
     const [search, setSearch] = useState('');
@@ -45,7 +45,7 @@ export function PermissionForm({ user, permissions }: { user: User; permissions:
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        put(UserController.updatePermission({ user: user.id }).url);
+        put(RoleController.updatePermission({ role: role.id }).url);
     };
 
     // filter permissions based on search

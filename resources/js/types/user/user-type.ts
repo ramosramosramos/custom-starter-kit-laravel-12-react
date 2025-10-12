@@ -2,7 +2,6 @@ import { Filter } from '..';
 import { Meta } from '../paginator-type';
 import { CanBe, Permission } from '../permission/permission-type';
 
-
 export type User = {
     id: number;
     name: string;
@@ -20,7 +19,3 @@ export type UserProps = {
     };
     filter: Filter;
 };
-
-
-
-

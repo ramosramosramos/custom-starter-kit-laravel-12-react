@@ -27,26 +27,23 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                                         </CollapsibleTrigger>
 
                                         {/* Children links */}
-                                        <CollapsibleContent className="space-y-1 pl-4 pt-1">
+                                        <CollapsibleContent className="space-y-1 pt-1 pl-4">
                                             {item.children?.map(
                                                 (child) =>
                                                     child.show && (
                                                         <SidebarMenuItem key={child.title}>
                                                             <SidebarMenuButton asChild isActive={child.isActive} tooltip={{ children: child.title }}>
-
-                                                                {
-                                                                    child.tag === "a" ?
-                                                                        <a href={child.href} >
-                                                                            {child.icon && <child.icon />}
-                                                                            <span>{child.title}</span>
-                                                                        </a>
-                                                                        :
-                                                                        <Link href={child.href} prefetch="click" cacheFor="60m">
-                                                                            {child.icon && <child.icon />}
-                                                                            <span>{child.title}</span>
-                                                                        </Link>
-                                                                }
-
+                                                                {child.tag === 'a' ? (
+                                                                    <a href={child.href}>
+                                                                        {child.icon && <child.icon />}
+                                                                        <span>{child.title}</span>
+                                                                    </a>
+                                                                ) : (
+                                                                    <Link href={child.href} prefetch="click" cacheFor="60m">
+                                                                        {child.icon && <child.icon />}
+                                                                        <span>{child.title}</span>
+                                                                    </Link>
+                                                                )}
                                                             </SidebarMenuButton>
                                                         </SidebarMenuItem>
                                                     ),
@@ -56,21 +53,17 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
                                 ) : (
                                     // Normal item (single link)
                                     <SidebarMenuButton asChild isActive={item.isActive} tooltip={{ children: item.title }}>
-
-
-                                        {
-                                            item.tag === "a" ?
-                                                <a href={item.href} >
-                                                    {item.icon && <item.icon />}
-                                                    <span>{item.title}</span>
-                                                </a>
-                                                :
-                                                <Link href={item.href} prefetch="click" cacheFor="60m">
-                                                    {item.icon && <item.icon />}
-                                                    <span>{item.title}</span>
-                                                </Link>
-                                        }
-
+                                        {item.tag === 'a' ? (
+                                            <a href={item.href}>
+                                                {item.icon && <item.icon />}
+                                                <span>{item.title}</span>
+                                            </a>
+                                        ) : (
+                                            <Link href={item.href} prefetch="click" cacheFor="60m">
+                                                {item.icon && <item.icon />}
+                                                <span>{item.title}</span>
+                                            </Link>
+                                        )}
                                     </SidebarMenuButton>
                                 )}
                             </SidebarMenuItem>
@@ -80,7 +73,3 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
         </SidebarGroup>
     );
 }
-
-
-
-

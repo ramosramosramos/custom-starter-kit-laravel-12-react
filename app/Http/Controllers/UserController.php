@@ -106,9 +106,13 @@ final class UserController extends Controller
         $this->authorize(PermissionEnum::USER_UPDATE->value);
 
         $request->validate([
-            'permissions' => cr()->required()->array(),
-            'permissions.*' => cr()->required()->string()->merge(['exists:permissions,name']),
+            'permissions' => cr()->nullable()->array(),
+            'permissions.*' => cr()
+                ->nullable()
+                ->string()
+                ->merge(['exists:permissions,name']),
         ]);
+
 
         UpdatePermissionAction::run($user, $request->array('permissions'));
 

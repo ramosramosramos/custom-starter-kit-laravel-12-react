@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Actions\Permission\UpdatePermissionAction;
+use Inertia\Response;
 use App\Enum\PermissionEnum;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use Inertia\Response;
 use Spatie\Permission\Models\Role;
+use App\Http\Resources\RoleResource;
+use Illuminate\Http\RedirectResponse;
+use Spatie\Permission\Models\Permission;
+use App\Actions\Permission\UpdatePermissionAction;
 
 final class RoleController extends Controller
 {
@@ -18,10 +20,10 @@ final class RoleController extends Controller
     {
         $this->authorize(PermissionEnum::ROLE_VIEW->value);
 
-        $roles = Role::query()->paginate(10);
+        $roles = Role::query()->with('permissions')->paginate(10);
 
         return inertia('role/index', [
-            'roles' => $roles,
+            'roles' => RoleResource::collection($roles),
         ]);
     }
 
@@ -33,12 +35,13 @@ final class RoleController extends Controller
             'name' => cr()
                 ->required()
                 ->string()
+                ->lowercase()
                 ->sanitizeXss()
                 ->merge([Rule::unique(Role::class, 'name')]),
         ]);
 
         Role::create([
-            'name' => mb_strtolower((string) $request->string('name')),
+            'name' => (string) $request->string('name'),
         ]);
 
         return redirect()->route('roles.index')
@@ -53,26 +56,36 @@ final class RoleController extends Controller
             'name' => cr()
                 ->required()
                 ->string()
+                ->lowercase()
                 ->sanitizeXss()
                 ->merge([Rule::unique(Role::class, 'name')->ignore($role->id)]),
         ]);
 
         $role->update([
-            'name' => mb_strtolower((string) $request->string('name')),
+            'name' => (string) $request->string('name'),
         ]);
 
         return redirect()->route('roles.index')
             ->with('success', 'Role updated successfully');
     }
 
+
+    public function editPermission(Role $role): Response
+    {
+        $this->authorize(PermissionEnum::USER_UPDATE->value);
+        return inertia('role/edit-permission', [
+            'role' => new RoleResource($role->load('permissions')),
+            'permissions' => Permission::select('id', 'name')->get(),
+        ]);
+    }
     public function updatePermission(Request $request, Role $role): RedirectResponse
     {
         $this->authorize(PermissionEnum::ROLE_UPDATE->value);
 
         $request->validate([
-            'permissions' => cr()->required()->array(),
+            'permissions' => cr()->nullable()->array(),
             'permissions.*' => cr()
-                ->required()
+                ->nullable()
                 ->string()
                 ->merge(['exists:permissions,name']),
         ]);

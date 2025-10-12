@@ -27,7 +27,8 @@ Route::middleware(['auth', 'verified'])->group(function (): void {
     Route::put('users/{user}/update-permission', [UserController::class, 'updatePermission'])->name('users.updatePermission');
 
     Route::apiResource('roles', RoleController::class)
-        ->middlewareFor(['destroy'], 'role.password.confirm:'.RoleEnum::SUPER_ADMIN->value);
+    ->middlewareFor(['destroy'], 'role.password.confirm:'.RoleEnum::SUPER_ADMIN->value);
+    Route::get('roles/{role}/edit-permission', [RoleController::class, 'editPermission'])->name('roles.editPermission');
     Route::put('roles/{role}/update-permission', [RoleController::class, 'updatePermission'])->name('roles.updatePermission');
 
 });

@@ -17,5 +17,3 @@ export type RoleProps = {
     };
     filter: Filter;
 };
-
-
