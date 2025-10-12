@@ -4,6 +4,8 @@ import EditButton from '@/components/buttons/edit-button';
 import TableCompound from '@/components/compounds/table-compound';
 import ConfirmInputDialog from '@/components/dialogs/confirm-input-dialog';
 import FormDialog from '@/components/dialogs/form-dialog';
+import NoSearchFound from '@/components/fallbacks/no-search-found';
+import SearchFilter from '@/components/inputs/search-filter';
 import DefaultPaginator from '@/components/paginators/default-paginator';
 import { useCan } from '@/hooks/use-can';
 import AppLayout from '@/layouts/app-layout';
@@ -29,12 +31,18 @@ export default function Index({ roles, filter }: RoleProps) {
                 <div className="flex justify-end p-1">
                     <RoleFormDialog formAbility='create' />
                 </div>
+                <div className="flex justify-start p-1">
+                    <SearchFilter url={RoleController.index().url} filter={filter} searchLimit={false} />
+                </div>
                 <div className="relative min-h-[100vh] flex-1 overflow-hidden rounded-xl border border-sidebar-border/70 md:min-h-min md:p-5 dark:border-sidebar-border">
                     {roles.data.length > 0 && (
                         <>
                             <RoleTable roles={roles} />
                             <DefaultPaginator meta={roles.meta} filter={filter} />
                         </>
+                    )}
+                    {roles.data.length === 0 && (
+                        <NoSearchFound title={filter.search} />
                     )}
                 </div>
             </div>

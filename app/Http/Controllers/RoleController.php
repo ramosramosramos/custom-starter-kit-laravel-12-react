@@ -16,14 +16,23 @@ use App\Actions\Permission\UpdatePermissionAction;
 
 final class RoleController extends Controller
 {
-    public function index(): Response
+    public function index(Request $request): Response
     {
         $this->authorize(PermissionEnum::ROLE_VIEW->value);
-
-        $roles = Role::query()->with('permissions')->paginate(10);
+        $request->validate(['search' => cr()->nullable()->string()->sanitizeXss()]);
+        $search = (string) $request->string('search', null);
+        $roles = Role::query()->with('permissions')
+            ->when($search, function ($query) use ($search) {
+                $query->where('name', 'like', "%$search%");
+            })
+            ->select(['id', 'name', 'created_at'])
+            ->paginate(10);
 
         return inertia('role/index', [
             'roles' => RoleResource::collection($roles),
+            'filter' => [
+                'search' => $search
+            ]
         ]);
     }
 

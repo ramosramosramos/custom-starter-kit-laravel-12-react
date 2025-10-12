@@ -20,7 +20,7 @@ export function useMainNavItems(): NavItem[] {
             href: '',
             icon: User,
             show: 'show',
-            isActive: current('users.index') || current('roles.index'),
+            isActive: current('users.index') || current('users.create') || current('users.edit') || current('roles.index'),
             type: 'parent',
             children: [
                 {
