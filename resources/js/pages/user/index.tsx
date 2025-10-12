@@ -114,7 +114,7 @@ function PermissionsCell({ permissions }: { permissions: Permission[] }) {
     const [expanded, setExpanded] = useState(false);
 
     const visiblePermissions = expanded ? permissions : permissions.slice(0, 3); // show first 3 only
-
+    const count: boolean = permissions.length > 1;
     return (
         <div className="flex max-w-[250px] transform flex-wrap items-center gap-2 transition-all duration-300">
             {visiblePermissions.map((permission) => (
@@ -122,7 +122,7 @@ function PermissionsCell({ permissions }: { permissions: Permission[] }) {
                     <span className="rounded-full px-2 text-primary capitalize underline dark:text-white">
                         {permission.name.replaceAll('_', ' ')}
                     </span>
-                    ,
+                    {count && ','}
                 </div>
             ))}
             {permissions.length > 3 && (

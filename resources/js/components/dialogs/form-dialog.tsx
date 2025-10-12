@@ -7,6 +7,9 @@ import RequiredIndicator from '../inputs/indicators/required-indicator';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
+import { FormAbility } from '@/types';
+import AddButton from '../buttons/add-button';
+import EditButton from '../buttons/edit-button';
 
 type FormDialogProps = {
     title: string;
@@ -23,15 +26,30 @@ type FormDialogProps = {
 
     contentClassName?: ComponentProps<typeof Button>['className'];
     contentProps?: ComponentProps<typeof DialogCompound.Content>;
+
+    open?: boolean | undefined;
+    defaultOpen?: boolean | undefined;
+    onOpenChange?: (open: boolean) => void;
+    formAbility: FormAbility
+
 };
 
 export default function FormDialog(props: ComponentProps<typeof DialogCompound> & FormDialogProps) {
+
     return (
-        <DialogCompound>
+        <DialogCompound open={props?.open} onOpenChange={props?.onOpenChange} >
             <DialogCompound.Trigger asChild>
-                <Button className={props.triggerClassName} variant={props.triggerVariant}>
-                    {props.triggerName}
-                </Button>
+
+                    {
+                        props?.formAbility == "create" ?
+                            <AddButton className={props.triggerClassName} variant={props.triggerVariant}>
+                                {props.triggerName}
+                            </AddButton> :
+                            <EditButton className={props.triggerClassName} variant={props.triggerVariant}>
+                                {props.triggerName}
+                            </EditButton>
+                    }
+
             </DialogCompound.Trigger>
             <DialogCompound.Content className={props.contentClassName} {...props.contentProps}>
                 <DialogCompound.Header>
@@ -68,20 +86,55 @@ FormDialog.InputError = InputError;
 FormDialog.Button = Button;
 
 //usage
-// function RoleFormDialog() {
+// type RoleFormDialogProps = {
+//     formAbility: FormAbility;
+//     role?: Role;
+// }
+// type RoleFormType = {
+//     name: string
+// }
+// function RoleFormDialog({ formAbility, role }: RoleFormDialogProps) {
+//     const [open, setOpen] = useState<boolean>(false);
+//     const { data, setData, errors, post, put } = useForm<RoleFormType>({
+//         name: role ? role.name : '',
+//     });
+
+//     const submit: FormEventHandler = (e) => {
+//         e.preventDefault();
+//         // setOpen(true);
+//         if (formAbility === "create") {
+//             post(RoleController.store().url, {
+//                 onSuccess: () => {
+//                     setOpen(false);
+
+//                 }
+//             })
+//         }
+//         if (formAbility === "edit") {
+//             put(RoleController.update({ role: role?.id as number }).url, {
+//                 onSuccess: () => {
+//                     setOpen(false);
+
+//                 }
+//             })
+//         }
+//     }
 //     return (
 //         <FormDialog
-//             title='Edit'
-//             description='Edit'
-//             triggerName='Edit'
+//             open={open}
+//        onOpenChange={setOpen}
+
+//             onSubmit={submit}
+//             title={formAbility === "edit" ? 'Edit' : 'Create role'}
+//             triggerName={formAbility === "edit" ? 'Edit' : 'Create'}
 //         >
 //             <div className='mb-3 space-x-1.5'>
 //                 <FormDialog.Label label='Name' required />
-//                 <FormDialog.Input />
-//                 <FormDialog.InputError />
+//                 <FormDialog.Input value={data.name} onChange={(e) => setData('name', e.target.value)} />
+//                 <FormDialog.InputError message={errors.name} />
 //             </div>
 //             <FormDialog.Button>
-//                 Save
+//                 {formAbility === "edit" ? 'Save' : 'Submit'}
 //             </FormDialog.Button>
 //         </FormDialog>
 //     );
