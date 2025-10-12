@@ -88,7 +88,7 @@
         ],
         "format": [
             "vendor/bin/phpstan analyse",
-            "vendor/bin/pint --parallel"
+            "vendor/bin/pint"
         ],
         "rector": [
             "rector"

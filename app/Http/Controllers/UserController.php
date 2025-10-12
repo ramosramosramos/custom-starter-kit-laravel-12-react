@@ -26,11 +26,12 @@ final class UserController extends Controller
         $this->authorize(PermissionEnum::USER_VIEW->value);
         $request->validate(['search' => cr()->nullable()->string()->sanitizeXss()]);
         $search = (string) $request->string('search', null);
+
         return inertia('user/index', [
             'users' => UserResource::collection(app(UserService::class)->getUsers($search)),
             'filter' => [
                 'search' => $search,
-            ]
+            ],
         ]);
     }
 
@@ -117,7 +118,6 @@ final class UserController extends Controller
                 ->string()
                 ->merge(['exists:permissions,name']),
         ]);
-
 
         UpdatePermissionAction::run($user, $request->array('permissions'));
 

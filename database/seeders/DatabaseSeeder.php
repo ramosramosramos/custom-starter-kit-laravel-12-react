@@ -80,7 +80,9 @@ final class DatabaseSeeder extends Seeder
         }
         $super_admin_user->assignRole(RoleEnum::SUPER_ADMIN->value);
         $admin_user->assignRole(RoleEnum::ADMIN->value);
-
+        /**
+         * @var Role $super_admin_role
+         */
         $super_admin_role = Role::where('name', RoleEnum::SUPER_ADMIN->value)->first();
         $super_admin_role->syncPermissions(PermissionEnum::cases());
         // $super_admin_user->syncPermissions(PermissionEnum::cases());

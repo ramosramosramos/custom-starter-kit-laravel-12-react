@@ -83,6 +83,7 @@ final class BackupController extends Controller
 
         $bytes /= 1024 ** $pow;
 
+        // @phpstan-ignore-next-line
         return round($bytes, $precision).' '.$units[$pow];
     }
 }

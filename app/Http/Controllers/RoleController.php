@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Inertia\Response;
+use App\Actions\Permission\UpdatePermissionAction;
 use App\Enum\PermissionEnum;
-use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
-use Spatie\Permission\Models\Role;
 use App\Http\Resources\RoleResource;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Inertia\Response;
 use Spatie\Permission\Models\Permission;
-use App\Actions\Permission\UpdatePermissionAction;
+use Spatie\Permission\Models\Role;
 
 final class RoleController extends Controller
 {
@@ -31,8 +31,8 @@ final class RoleController extends Controller
         return inertia('role/index', [
             'roles' => RoleResource::collection($roles),
             'filter' => [
-                'search' => $search
-            ]
+                'search' => $search,
+            ],
         ]);
     }
 
@@ -78,15 +78,16 @@ final class RoleController extends Controller
             ->with('success', 'Role updated successfully');
     }
 
-
     public function editPermission(Role $role): Response
     {
         $this->authorize(PermissionEnum::USER_UPDATE->value);
+
         return inertia('role/edit-permission', [
             'role' => new RoleResource($role->load('permissions')),
             'permissions' => Permission::select('id', 'name')->get(),
         ]);
     }
+
     public function updatePermission(Request $request, Role $role): RedirectResponse
     {
         $this->authorize(PermissionEnum::ROLE_UPDATE->value);
