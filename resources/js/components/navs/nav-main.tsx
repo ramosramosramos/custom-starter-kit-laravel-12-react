@@ -79,43 +79,46 @@ function ParentCollapsible({ item }: { item: NavItem }) {
                         {item.icon && <item.icon className="h-4 w-4" />}
                         <span className="ml-2">{item.title}</span>
                         <ChevronDown
-                            className={`ml-auto h-4 w-4 transition-transform duration-200 ${
-                                open ? 'rotate-180' : ''
-                            }`}
+                            className={`ml-auto h-4 w-4 transition-transform duration-200 ${open ? 'rotate-180' : ''
+                                }`}
                         />
                     </div>
                 </SidebarMenuButton>
             </CollapsibleTrigger>
 
             <CollapsibleContent className="space-y-1 pt-1 pl-4">
-                {item.children?.map(
-                    (child) =>
-                        child.show && (
-                            <SidebarMenuItem key={child.title}>
-                                <SidebarMenuButton
-                                    asChild
-                                    isActive={child.isActive}
-                                    tooltip={{ children: child.title }}
-                                >
-                                    {child.tag === 'a' ? (
-                                        <a href={child.href}>
-                                            {child.icon && <child.icon />}
-                                            <span>{child.title}</span>
-                                        </a>
-                                    ) : (
-                                        <Link
-                                            href={child.href}
-                                            prefetch="click"
-                                            cacheFor="60m"
+
+                    <SidebarMenu> {/* ✅ adds a <ul> wrapper */}
+                        {item.children?.map(
+                            (child) =>
+                                child.show && (
+                                    <SidebarMenuItem key={child.title}>
+                                        <SidebarMenuButton
+                                            asChild
+                                            isActive={child.isActive}
+                                            tooltip={{ children: child.title }}
                                         >
-                                            {child.icon && <child.icon />}
-                                            <span>{child.title}</span>
-                                        </Link>
-                                    )}
-                                </SidebarMenuButton>
-                            </SidebarMenuItem>
-                        ),
-                )}
+                                            {child.tag === 'a' ? (
+                                                <a href={child.href}>
+                                                    {child.icon && <child.icon />}
+                                                    <span>{child.title}</span>
+                                                </a>
+                                            ) : (
+                                                <Link
+                                                    href={child.href}
+                                                    prefetch="click"
+                                                    cacheFor="60m"
+                                                >
+                                                    {child.icon && <child.icon />}
+                                                    <span>{child.title}</span>
+                                                </Link>
+                                            )}
+                                        </SidebarMenuButton>
+                                    </SidebarMenuItem>
+                                ),
+                        )}
+                    </SidebarMenu> {/* ✅ closes here */}
+
             </CollapsibleContent>
         </Collapsible>
     );
